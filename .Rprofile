@@ -7,7 +7,7 @@ local ({
 # http://stackoverflow.com/questions/24387660/how-to-change-libpaths-permanently-in-r
 # Note that the order of these has to be reversed for initial installation of
 # nvimcom, then they can be reset.
-.libPaths(c ('~/R/x86_64-pc-linux-gnu-library/3.5', .libPaths ()))
+.libPaths(c ('~/R/x86_64-pc-linux-gnu-library/3.6', .libPaths ()))
 #.libPaths(c ('/usr/local/lib/R/site-library', .libPaths ()))
 .libPaths(c ('/usr/lib/R/library', .libPaths ()))
  
@@ -119,7 +119,9 @@ attach(.env)
     # vapoRwave::new_retro as default ggplot2 theme, with tweaks that should be
     # fixed and able to be removed with my PR
     # https://github.com/moldach/vapoRwave/pull/3
-    th <- ggplot2::theme_minimal ()
+    suppressMessages (
+                      th <- ggplot2::theme_minimal ()
+    )
     nr <- vapoRwave::new_retro ()
 
     th$axis.title.x <- th$axis.title.y <- nr$axis.title
