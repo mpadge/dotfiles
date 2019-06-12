@@ -203,7 +203,8 @@ let g:R_rconsole_width = winwidth(0) / 2
 "autocmd VimResized * let R_rconsole_width = winwidth(0) / 2
 let g:R_nvimpager = "horizontal"
 let R_args = ['--no-save', '--quiet']
-"let R_tmux_title = 'R'
+"let R_tmux_title = 'automatic'
+let R_tmux_title = 'R-'.split(getcwd(),'/')[-1]
 "let g:R_notmuxconf = 1 "use my .tmux.conf, not the Nvim-r one
 
 let r_syntax_folding = 1
