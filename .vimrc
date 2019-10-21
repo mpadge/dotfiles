@@ -270,10 +270,12 @@ endfunction
 
 let g:syntastic_r_lintr_quiet_messages = {"regex": 
     \ ['Only use double-quotes.', 'Opening curly braces should never',
-    \ 'No visible global function definition', 'Commented code should be removed']}
+    \ 'No visible global function definition', 'Commented code should be removed',
+    \ 'Remove spaces before the left parenthesis']}
 let g:syntastic_rmd_lintr_quiet_messages = {"regex": 
     \ ['Only use double-quotes.', 'Opening curly braces should never',
-    \ 'No visible global function definition', 'Commented code should be removed']}
+    \ 'No visible global function definition', 'Commented code should be removed',
+    \ 'Remove spaces before the left parenthesis']}
 " syntastic has :Error, so this is required for :E to work again
 " (https://github.com/vim-syntastic/syntastic/issues/164)
 command E Ex
