@@ -11,8 +11,6 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'jalvesaq/Nvim-R'
-Plugin 'altercation/vim-colors-solarized'
-"Plugin 'sickill/vim-monokai'
 Plugin 'tyru/open-browser.vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'vim-airline/vim-airline'
@@ -20,12 +18,19 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'edkolev/tmuxline.vim'
 Plugin 'jimhester/lintr'
 Plugin 'mkitt/tabline.vim'
-Plugin 'kannokanno/previm'
+"Plugin 'kannokanno/previm'
 Plugin 'wesQ3/vim-windowswap'
 Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'vim-pandoc/vim-pandoc-syntax'
 "Plugin 'vim-pandoc/vim-rmarkdown'
 Plugin 'vim-scripts/matchit.zip'
+
+"colorschemes (see https://vimcolors.com/):
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'atahabaki/archman-vim'
+Plugin 'sickill/vim-monokai'
+Plugin 'jdsimcoe/hyper.vim'
+Plugin 'megantiu/true.vim'
 call vundle#end()
 filetype plugin indent on
 
@@ -45,6 +50,7 @@ set t_Co=16
 let g:solarized_termcolors=16
 colorscheme solarized
 "colorscheme monokai
+"colorscheme true
 
 if has("autocmd")
     " Jump to the last position when reopening a file
@@ -129,6 +135,10 @@ vmap gw <Plug>(openbrowser-open)
 nnoremap <tab> %
 vnoremap <tab> %
 
+" edit and source .vimrc
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <leader>sv :source $MYVIMRC<cr>
+
 "------------------------------------
 " Showmarks
 "------------------------------------
@@ -141,7 +151,7 @@ let showmarks_include="abcdefghijklmnopqrstuvwxyz"
 " Note that help doesn't work, but just search "vim netrw" or see here:
 " https://medium.com/@mozhuuuuu/vimmers-you-dont-need-nerdtree-18f627b561c3
 "------------------------------------
-function MyExplore()
+function! MyExplore()
     tabnew
     Explore
     nmap <buffer> <leader>q :q<cr>
@@ -219,7 +229,19 @@ let r_syntax_folding = 1
 "    autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
 "augroup END
 
-nnoremap <leader>m :PrevimOpen<cr>
+"nnoremap <leader>m :PrevimOpen<cr>
+
+"Manual markdown render with <leader>p
+"inoremap <buffer> <F4> <ESC>:call Markdown_Preview()<cr>
+function! Markdown_Preview()
+    let b:curr_file = expand('%:p')
+    call system('pandoc --standalone "' . b:curr_file . '" >/tmp/vim-markdown-preview.html')
+    call system('xdg-open /tmp/vim-markdown-preview.html 1>/dev/null 2>/dev/null &')
+endfunction
+noremap <leader>mp :call Markdown_Preview()<cr>
+
+"nmap <leader>p :call Markdown_Preview()<cr>
+"nmap <buffer> <F4> :call Markdown_Preview()<cr>
 
 "-------------------------------------------
 "-------------   syntastic   ---------------
@@ -278,7 +300,7 @@ let g:syntastic_rmd_lintr_quiet_messages = {"regex":
     \ 'Remove spaces before the left parenthesis']}
 " syntastic has :Error, so this is required for :E to work again
 " (https://github.com/vim-syntastic/syntastic/issues/164)
-command E Ex
+command! E Ex
 
 "-------------------------------------------
 "-------------   vim-latex   ---------------
