@@ -1,7 +1,7 @@
 local ({
         r <- getOption('repos')
-        r['CRAN'] <- 'https://cran.uni-muenster.de'
-        #r['CRAN'] <- 'https://cran.wu.ac.at'
+        #r['CRAN'] <- 'https://cran.uni-muenster.de'
+        r['CRAN'] <- 'https://cran.wu.ac.at'
         options(repos=r)
         })
 # http://stackoverflow.com/questions/24387660/how-to-change-libpaths-permanently-in-r
@@ -16,6 +16,7 @@ local ({
 options (width = 80)
 options (scipen=10)
 options (editor='vim')
+options (browser='firefox')
 #options (prompt='R> ', digits=4)
 
 .env <- new.env()
