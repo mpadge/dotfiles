@@ -45,12 +45,12 @@ if has ('gui_running')
 else
     set background=dark
 endif
-set background=light
+set background=dark
 set t_Co=16
 let g:solarized_termcolors=16
-colorscheme solarized
+"colorscheme solarized
 "colorscheme monokai
-"colorscheme true
+colorscheme true
 
 if has("autocmd")
     " Jump to the last position when reopening a file
@@ -192,7 +192,7 @@ set wildmode=list:full
 "-------------   Nvim-R   ---------------
 "----------------------------------------
 
-let R_source = '/home/markus/tmux_split.vim'
+let R_source = '/home/smexus/tmux_split.vim'
 " https://github.com/jcfaria/Vim-R-plugin/issues/204
 let g:ScreenImpl = 'Tmux'
 let g:ScreenShellInitialFocus = 'shell' 
