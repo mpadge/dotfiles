@@ -1,4 +1,4 @@
-# https://raw.githubusercontent.com/jalvesaq/Nvim-R/master/R/tmux_split.vim
+" https://raw.githubusercontent.com/jalvesaq/Nvim-R/master/R/tmux_split.vim
 
 if $TMUX == ''
     finish
