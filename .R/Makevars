@@ -1,0 +1,28 @@
+VER=
+CCACHE=ccache
+#CCACHE=
+COMPXX=clang++
+COMP=clang
+#COMPXX=g++
+#COMP=g++
+
+EXCL_A=/usr/lib/R/library/Rcpp/include
+EXCL_B=/usr/lib/R/library/RcppArmadillo/include
+EXCL_C=/usr/lib/R/library/RcppParallel/include
+
+CXX=$(CCACHE) $(COMPXX)$(VER)
+CXXFLAGS= -O -Wall -pedantic -Wconversion -isystem $(EXCL_A) -isystem $(EXCL_B) -isystem $(EXCL_C)
+CXXFLAGS= -O -Wall -pedantic
+
+CXX11=$(CCACHE) $(COMPXX)$(VER)
+CXX11FLAGS= -O -Wall -pedantic -Wconversion -isystem $(EXCL_A) -isystem $(EXCL_B) -isystem $(EXCL_C)
+CXX11FLAGS= -Wall -pedantic
+
+CXX14=$(CCACHE) $(COMPXX)$(VER)
+CXX14FLAGS= -O -Wall -pedantic -Wconversion -isystem $(EXCL_A) -isystem $(EXCL_B) -isystem $(EXCL_C)
+CXX14FLAGS= -O -Wall -pedantic
+
+CC=$(CCACHE) $(COMP)$(VER)
+
+FC=$(CCACHE) gfortran$(VER)
+F77=$(CCACHE) gfortran$(VER)
