@@ -1,15 +1,17 @@
-local ({
+#local ({
         r <- getOption('repos')
-        #r['CRAN'] <- 'https://cran.uni-muenster.de'
-        r['CRAN'] <- 'https://cran.wu.ac.at'
+        r['CRAN'] <- 'https://cran.uni-muenster.de'
+        #r['CRAN'] <- 'https://cran.wu.ac.at'
         options(repos=r)
-        })
+        rm (r)
+#        })
+
 # http://stackoverflow.com/questions/24387660/how-to-change-libpaths-permanently-in-r
 # Note that the order of these has to be reversed for initial installation of
 # nvimcom, then they can be reset.
-.libPaths(c ('~/R/x86_64-pc-linux-gnu-library/3.6', .libPaths ()))
 #.libPaths(c ('/usr/local/lib/R/site-library', .libPaths ()))
 .libPaths(c ('/usr/lib/R/library', .libPaths ()))
+.libPaths(c ('~/R/x86_64-pc-linux-gnu-library/4.0', .libPaths ()))
  
 #options (stringsAsFactors=FALSE)
 #options (max.print=100)
@@ -44,8 +46,9 @@ attach(.env)
             #colorout::setOutputColors (normal = 0, string = 208, stderror = 21,
             #                           verbose = FALSE)
             # and this for dark bg:
-            colorout::setOutputColors (normal = 244, string = 208, stderror = 21,
-                                       verbose = FALSE)
+            #colorout::setOutputColors (normal = 244, string = 208, stderror = 21,
+            #                           verbose = FALSE)
+            colorout::setOutputColors (verbose = FALSE)
         }
 
         rv <- R.Version ()$version.string
@@ -98,20 +101,27 @@ attach(.env)
             today <- strsplit (as.character (Sys.time ()), " ") [[1]] [1]
             if (file.exists (chk_file))
             {
-                chk_date <- utils::read.table (chk_file, as.is=TRUE) [1, 1]
+                #chk_date <- utils::read.table (chk_file, as.is=TRUE) [1, 1]
+                chk_date <- readLines (chk_file) [1]
                 if (chk_date == today)
                     do_check = FALSE
             }
             write (today, file = chk_file)
             if (do_check)
             {
-                message ('Old package check for ', today, ' : ', appendLF=FALSE)
+                cli::cli_h2 (paste0 ("Old package check for ", today))
                 old <- utils::old.packages ()
-                if (!is.null (old)) 
-                    message ('Updatable packages: ', 
-                             do.call (paste, as.list (rownames (old))), '\n')
-                else 
+                if (!is.null (old)) {
+                    cli::cli_alert_info ("Updatable packages:")
+                    cli::cli_ol(items = rownames (old))
+                    message ("\n")
+                } else 
                     message ('All packages up to date\n')
+
+                cli::cli_h2 ("foghorn results")
+                x <- foghorn::summary_cran_results (email = "mark.padgham@email.com")
+                if (sum (x [, c ("error", "fail", "warn", "note")]) > 0)
+                    cli::cli_text ("Run 'myfoghorn()' for details")
             }
         } else
             message ('nope, no internet\n')
@@ -120,20 +130,42 @@ attach(.env)
     # vapoRwave::new_retro as default ggplot2 theme, with tweaks that should be
     # fixed and able to be removed with my PR
     # https://github.com/moldach/vapoRwave/pull/3
-    suppressMessages (
-                      th <- ggplot2::theme_minimal ()
-    )
-    nr <- vapoRwave::new_retro ()
+    vw <- FALSE
+    if (vw) {
+        suppressMessages (
+                          th <- ggplot2::theme_minimal ()
+        )
+        nr <- vapoRwave::new_retro ()
 
-    th$axis.title.x <- th$axis.title.y <- nr$axis.title
-    th$panel.grid <- nr$panel.grid.major.x
-    nr$axis.title <- nr$panel.grid.major.x <- nr$panel.grid.major.y <- NULL
+        th$axis.title.x <- th$axis.title.y <- nr$axis.title
+        th$panel.grid <- nr$panel.grid.major.x
+        nr$axis.title <- nr$panel.grid.major.x <- nr$panel.grid.major.y <- NULL
 
-    th [names (th) %in% names (nr)] <- nr
+        th [names (th) %in% names (nr)] <- nr
 
-    ggplot2::theme_set (th)
+        ggplot2::theme_set (th)
+    }
 }
 
 
 #if(Sys.getenv('TERM') == 'xterm-256color')
 #    library('colorout')
+
+myfoghorn <- function (email = "mark.padgham@email.com") {
+    x <- foghorn::summary_cran_results (email = email)
+    for (type in c ("error", "fail", "warn", "note")) {
+        p <- x$package [x [[type]] > 0]
+        if (length (p) > 0) {
+            for (i in p) {
+                print (cli::rule (left = i))
+                xi <- foghorn::cran_details (pkg = i)
+                for (j in seq (nrow (xi))) {
+                    print (cli::boxx (paste0 (xi$result [j],
+                                              " (N = ", xi$n_flavors [j], ")"),
+                                      padding = c (0, 5, 0, 5)))
+                    message (xi$message [j])
+                }
+            }
+        }
+    }
+}
