@@ -18,7 +18,8 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'edkolev/tmuxline.vim'
 Plugin 'jimhester/lintr'
 Plugin 'mkitt/tabline.vim'
-"Plugin 'kannokanno/previm'
+Plugin 'kannokanno/previm'
+"Plugin 'suan/vim-instant-markdown'
 Plugin 'wesQ3/vim-windowswap'
 Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'vim-pandoc/vim-pandoc-syntax'
@@ -31,6 +32,7 @@ Plugin 'atahabaki/archman-vim'
 Plugin 'sickill/vim-monokai'
 Plugin 'jdsimcoe/hyper.vim'
 Plugin 'megantiu/true.vim'
+Plugin 'cormacrelf/vim-colors-github'
 call vundle#end()
 filetype plugin indent on
 
@@ -40,17 +42,17 @@ if has("syntax")
     syntax on
 endif
 
-if has ('gui_running')
-    set background=light
-else
-    set background=dark
-endif
-set background=dark
+"if has ('gui_running')
+"    set background=light
+"else
+"    set background=dark
+"endif
 set t_Co=16
 let g:solarized_termcolors=16
-"colorscheme solarized
-"colorscheme monokai
-colorscheme true
+set background=dark
+"colorscheme github "light
+"colorscheme monokai "dark
+colorscheme true "dark
 
 if has("autocmd")
     " Jump to the last position when reopening a file
@@ -224,21 +226,21 @@ let r_syntax_folding = 1
 "---------------   previm   ----------------
 "-------------------------------------------
 
-"augroup PrevimSettings
-"    autocmd!
-"    autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
-"augroup END
+augroup PrevimSettings
+    autocmd!
+    autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
+augroup END
 
-"nnoremap <leader>m :PrevimOpen<cr>
+nnoremap <leader>m :PrevimOpen<cr>
 
 "Manual markdown render with <leader>p
 "inoremap <buffer> <F4> <ESC>:call Markdown_Preview()<cr>
-function! Markdown_Preview()
-    let b:curr_file = expand('%:p')
-    call system('pandoc --standalone "' . b:curr_file . '" >/tmp/vim-markdown-preview.html')
-    call system('xdg-open /tmp/vim-markdown-preview.html 1>/dev/null 2>/dev/null &')
-endfunction
-noremap <leader>mp :call Markdown_Preview()<cr>
+"function! Markdown_Preview()
+"    let b:curr_file = expand('%:p')
+"    call system('pandoc --standalone "' . b:curr_file . '" >/tmp/vim-markdown-preview.html')
+"    call system('xdg-open /tmp/vim-markdown-preview.html 1>/dev/null 2>/dev/null &')
+"endfunction
+"noremap <leader>mp :call Markdown_Preview()<cr> " currently `;mp`
 
 "nmap <leader>p :call Markdown_Preview()<cr>
 "nmap <buffer> <F4> :call Markdown_Preview()<cr>
