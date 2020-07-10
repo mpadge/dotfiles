@@ -361,3 +361,4 @@ endfunction
 " colour highlight schemes and the likes.
 set spell spelllang=en_gb
 set spellfile=~/dictionary.utf-8.add
+set nospell
