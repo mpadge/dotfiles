@@ -1,0 +1,63 @@
+-- https://help.ubuntu.com/community/SettingUpConky
+
+conky.config = {
+
+background=true,
+update_interval=1,
+double_buffer=true,
+no_buffers=true,
+imlib_cache_size=10,
+
+draw_shades=false,
+draw_outline=false,
+draw_borders=false,
+
+gap_x=50,
+gap_y=50,
+
+alignment="bottom_left",
+
+minimum_height=200,
+minimum_width=0,
+
+own_window=true,
+own_window_type="desktop",
+own_window_transparent=true,
+own_window_hints="undecorated,below,sticky,skip_taskbar,skip_pager",
+
+own_window_argb_visual=true,
+own_window_argb_value=240,
+
+use_xft=true,
+xftalpha=1,
+font="Asleepytiming",
+text_buffer_size=256,
+override_utf8_locale=true,
+
+color0='777777',
+color1='7EB700',
+color2='00B806',
+
+}
+
+
+
+conky.text = [[
+${font Asleepytiming:size=150}${color1}\
+${alignc}${time %H:%M}\
+${voffset -120}
+${color0}${hr 5}
+${voffset -350}
+${font Asleepytiming:size=70}${color2}\
+${alignc}${time %d %B}\
+${voffset -20}
+${font Asleepytiming:size=30}${color2}\
+${alignc}CPU: ${cpu cpu0}%
+
+${voffset -20}/: ${color1}${goto 80}( ${fs_used /} / ${fs_size /} )
+${color2}${fs_bar 6 /}${color}
+
+${voffset -30}data: ${if_mounted /}${color1}${goto 80}( ${fs_used /data} / ${fs_size /data} )
+${color2}${fs_bar 6 /data}${color}${else}${goto 110}Not Mounted${endif}
+]]
+

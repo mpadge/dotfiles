@@ -1,0 +1,3 @@
+ #!/bin/bash
+ conky -c ~/.conky/.conkyrc_left &
+ conky -c ~/.conky/.conkyrc_right

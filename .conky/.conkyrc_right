@@ -13,18 +13,18 @@ draw_borders=false,
 gap_x=50,
 gap_y=50,
 
-alignment="bottom_left",
+alignment="bottom_right",
 
 minimum_height=200,
 minimum_width=0,
 
 own_window=true,
-own_window_type="desktop",
+own_window_type="normal",
 own_window_transparent=true,
 own_window_hints="undecorated,below,sticky,skip_taskbar,skip_pager",
 
 own_window_argb_visual=true,
-own_window_argb_value=240,
+own_window_argb_value=120,
 
 use_xft=true,
 xftalpha=1,
@@ -32,25 +32,13 @@ font="Asleepytiming",
 text_buffer_size=256,
 override_utf8_locale=true,
 
-color0='777777',
-color1='5A8300',
-color2='008372',
+color0='7EB700',
+color1='DEDEDE',
 
 }
 
 
-
 conky.text = [[
-${font Cantarell-Thin:size=120}${color1}\
-${alignc}${time %H:%M}\
-${voffset -120}
-${color0}$hr(1)
-${voffset -350}
-${font Cantarell-Thin:size=40}${color2}\
-${alignc}${time %d %B}\
-${voffset -10}
-${font Cantarell-Thin:size=20}${color2}\
-${alignc}CPU: ${cpu cpu0}% | ${fs_free /} free\
-${voffset -00}
-${color0}$hr(1)
+${offset 20}${voffset -0}${font Asleepytiming:size=50}${color0}TODO:
+${voffset -40}${font Asleepytiming:size=25}${color1}${tail ~/Documents/todo 5}
 ]]
