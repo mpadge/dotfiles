@@ -32,13 +32,15 @@ font="Asleepytiming",
 text_buffer_size=256,
 override_utf8_locale=true,
 
-color0='7EB700',
-color1='DEDEDE',
+color0='777777',
+color1='7EB700',
+color2='00B806',
 
 }
 
 
 conky.text = [[
-${offset 20}${voffset -0}${font Asleepytiming:size=50}${color0}TODO:
-${voffset -40}${font Asleepytiming:size=25}${color1}${tail ~/Documents/todo 5}
+${offset 20}${voffset -0}${font Asleepytiming:size=50}${color1}TODO:
+${voffset -20}${color0}${hr 5}
+${voffset -20}${font Asleepytiming:size=25}${color2}${head ~/Documents/todo 5}
 ]]
