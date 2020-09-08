@@ -93,8 +93,7 @@ attach(.env)
         message (bl, bot_half, ' R ', bot_half, bot)
         message ('')
 
-        if (curl::has_internet ())
-        {
+        if (curl::has_internet ()) {
             # only check for new packages once per day
             chk_file <- "~/.Rold_pkg_check"
             do_check <- TRUE
@@ -123,30 +122,31 @@ attach(.env)
                 if (sum (x [, c ("error", "fail", "warn", "note")]) > 0)
                     cli::cli_text ("Run 'myfoghorn()' for details")
             }
-        } else
+        } else {
             message ('nope, no internet\n')
-    }
-
-    # vapoRwave::new_retro as default ggplot2 theme, with tweaks that should be
-    # fixed and able to be removed with my PR
-    # https://github.com/moldach/vapoRwave/pull/3
-    vw <- FALSE
-    if (vw) {
-        suppressMessages (
-                          th <- ggplot2::theme_minimal ()
-        )
-        nr <- vapoRwave::new_retro ()
-
-        th$axis.title.x <- th$axis.title.y <- nr$axis.title
-        th$panel.grid <- nr$panel.grid.major.x
-        nr$axis.title <- nr$panel.grid.major.x <- nr$panel.grid.major.y <- NULL
-
-        th [names (th) %in% names (nr)] <- nr
-
-        ggplot2::theme_set (th)
+        }
     }
 }
 
+# vapoRwave::new_retro as default ggplot2 theme, with tweaks that should be
+# fixed and able to be removed with my PR
+# https://github.com/moldach/vapoRwave/pull/3
+vw <- TRUE
+if (vw) {
+    suppressMessages (
+                      th <- ggplot2::theme_minimal ()
+    )
+    nr <- vapoRwave::new_retro ()
+
+    th$axis.title.x <- th$axis.title.y <- nr$axis.title
+    th$panel.grid <- nr$panel.grid.major.x
+    nr$axis.title <- nr$panel.grid.major.x <- nr$panel.grid.major.y <- NULL
+
+    nr <- nr [which (names (nr) %in% names(th))]
+    th [match (names (nr), names(th))] <- nr
+
+    ggplot2::theme_set (th)
+}
 
 #if(Sys.getenv('TERM') == 'xterm-256color')
 #    library('colorout')
