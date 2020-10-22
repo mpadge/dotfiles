@@ -34,13 +34,14 @@ override_utf8_locale=true,
 
 color0='777777',
 color1='7EB700',
-color2='00B806',
+color2='AAB8A6',
 
 }
 
 
 conky.text = [[
+#${image ~/.conky/bg1.png -p 1,1 -s 500x350}
 ${offset 20}${voffset -0}${font Asleepytiming:size=50}${color1}TODO:
 ${voffset -20}${color0}${hr 5}
-${voffset -20}${font Asleepytiming:size=25}${color2}${head ~/Documents/todo 5}
+${voffset -20}${font Asleepytiming:size=25}${color2}${head ~/Documents/todo 10}
 ]]

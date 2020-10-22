@@ -16,7 +16,7 @@ CXXFLAGS= -O -Wall -pedantic
 
 CXX11=$(CCACHE) $(COMPXX)$(VER)
 CXX11FLAGS= -O -Wall -pedantic -Wconversion -isystem $(EXCL_A) -isystem $(EXCL_B) -isystem $(EXCL_C)
-CXX11FLAGS= -Wall -pedantic
+CXX11FLAGS= -O -Wall -pedantic
 
 CXX14=$(CCACHE) $(COMPXX)$(VER)
 CXX14FLAGS= -O -Wall -pedantic -Wconversion -isystem $(EXCL_A) -isystem $(EXCL_B) -isystem $(EXCL_C)

@@ -131,7 +131,7 @@ attach(.env)
 # vapoRwave::new_retro as default ggplot2 theme, with tweaks that should be
 # fixed and able to be removed with my PR
 # https://github.com/moldach/vapoRwave/pull/3
-vw <- TRUE
+vw <- FALSE
 if (vw) {
     suppressMessages (
                       th <- ggplot2::theme_minimal ()
@@ -142,11 +142,13 @@ if (vw) {
     th$panel.grid <- nr$panel.grid.major.x
     nr$axis.title <- nr$panel.grid.major.x <- nr$panel.grid.major.y <- NULL
 
-    nr <- nr [which (names (nr) %in% names(th))]
-    th [match (names (nr), names(th))] <- nr
+    nr <- nr [which (names (nr) %in% names (th))]
+    th [match (names (nr), names (th))] <- nr
 
     ggplot2::theme_set (th)
+    rm (nr, th)
 }
+rm (vw)
 
 #if(Sys.getenv('TERM') == 'xterm-256color')
 #    library('colorout')

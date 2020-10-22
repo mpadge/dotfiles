@@ -141,6 +141,9 @@ vnoremap <tab> %
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 
+" paste from clipboard
+map <F4> :r!xclip -o<CR>
+
 "------------------------------------
 " Showmarks
 "------------------------------------
@@ -357,6 +360,7 @@ endfunction
 " time, follow the instructions in ":h mysyntaxfile-add": 
 " Make a new directory in /.vim/after/sytax, with "tex.vim" holding this syn
 " command. 
+" Add a work to the `spellfile` with `zg`
 " The mysyntaxfile-add instructions also have lots of details about custom
 " colour highlight schemes and the likes.
 set spell spelllang=en_gb
