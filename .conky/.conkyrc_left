@@ -38,6 +38,8 @@ color0='777777',
 color1='7EB700',
 color2='00B806',
 
+xinerama_head = 2
+
 }
 
 
