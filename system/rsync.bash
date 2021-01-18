@@ -5,7 +5,7 @@ DEV=$(ls /run/media/$UNAME)
 
 echo "---------------------------------------------------"
 echo "1. Backup FROM /home TO $DEV"
-echo "2. Backup FROM /data TO $DEV (excluding mega, Dropbox)"
+echo "2. Backup FROM /data TO $DEV (excluding mega, Dropbox, docker)"
 echo "3. Backup FROM /data/mega TO $DEV"
 echo "4. Backup FROM /data/Dropbox TO $DEV"
 echo "5. Backup FROM $DEV TO /home"
@@ -76,7 +76,7 @@ if [ "$OPT" == 1 ]; then
 elif [ "$OPT" == 2 ]; then
     DEST=$DEV/data/
     sudo rsync $FLAGS $RSOPTS --exclude "/Dropbox/" \
-        --exclude "/mega/" -s /data/ $DEST
+        --exclude "/mega/" --exclude "/docker/" -s /data/ $DEST
 elif [ "$OPT" == 3 ]; then
     DEST=$DEV/data/mega/
     sudo rsync $FLAGS $RSOPTS -s /data/mega/ $DEST
