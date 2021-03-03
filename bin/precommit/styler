@@ -1,0 +1,7 @@
+#!/usr/bin/env Rscript
+
+d <- rprojroot::find_root("DESCRIPTION")
+ts <- styler::tidyverse_style ()
+ts$space$remove_space_before_opening_paren <-
+    ts$space$remove_space_after_fun_dec <- NULL
+styler::style_pkg (indent_by = 4, transformers = ts)

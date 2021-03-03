@@ -1,0 +1,13 @@
+#!/usr/bin/env Rscript
+
+if ("src" %in% list.files (here::here ())) {
+    f <- list.files (file.path (here::here (), "src"),
+                     full.names = TRUE,
+                     pattern = "\\.h$|\\.hpp$|\\.c$|\\.cpp$")
+    debug_active <- vapply (f, function (i) {
+                                x <- readLines (i)
+                                any (grepl ("^#define DEBUG$", x)) },
+                                logical (1))
+    if (any (debug_active))
+        stop ("src files have active debug lines")
+}
