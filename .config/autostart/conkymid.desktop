@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=conky
+Exec=/usr/bin/conky -c /home/smexus/.conky/.conkyrc_mid  --pause=5
+StartupNotify=false
+Terminal=false
+X-GNOME-Autostart-enabled=true
