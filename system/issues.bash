@@ -6,7 +6,7 @@ TXT='\033[0;32m' # green, or 1;32m for light green
 SYM='\u2192' # right arrow
 
 if [ "$1" == "" ]; then
-    Rscript -e "dat <- mpmisc::latest_comments (); writeLines (dat$repo_issue, '~/Documents/issues')"
+    Rscript -e "dat <- mpmisc::latest_comments (); writeLines (dat[[\"repo_issue\"]], '~/Documents/issues')"
 elif [ "$1" == "help" ]; then
     echo -e "${SYM} ${ARG}no arguments${NC}    : ${TXT}update issue comment list.${NC}"
     echo -e "${SYM} ${ARG}help${NC}            : ${TXT}display these help messages.${NC}"
