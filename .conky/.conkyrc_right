@@ -10,10 +10,10 @@ draw_shades=false,
 draw_outline=false,
 draw_borders=false,
 
-gap_x=50,
-gap_y=50,
+gap_x=1000,
+gap_y=500,
 
-alignment="bottom_right",
+alignment="bottom_left",
 
 minimum_height=200,
 minimum_width=0,
@@ -33,16 +33,19 @@ text_buffer_size=256,
 override_utf8_locale=true,
 
 color0='777777',
-color1='7EB700',
-color2='AAB8A6',
+-- color1='7EB700',
+color1='B80006',
+-- color2='AAB8A6',
+color2='382A26',
 
-xinerama_head = 1
+xinerama_head = 2
 
 }
 
 
 conky.text = [[
 #${image ~/.conky/bg1.png -p 1,1 -s 500x350}
+#uncomment next 3 lines to switch back on:
 ${offset 20}${voffset -0}${font Asleepytiming:size=50}${color1}TODO:
 ${voffset -20}${color0}${hr 5}
 ${voffset -20}${font Asleepytiming:size=25}${color2}${head ~/Documents/todo 10}
