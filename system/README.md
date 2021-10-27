@@ -6,4 +6,5 @@ called from various bash aliases.
    Also mirrors a push to all listed remotes.
 2. `rsync.bash` Script with easy interface to a few common `rsync` options I
    use for backing up.
+3. `email` to call `himalaya.bash` for [`himalaya` email client](https://github.com/soywod/himalaya).
 
