@@ -5,35 +5,36 @@ runtime! debian.vim
 set nocompatible
 filetype off
 
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'vim-syntastic/syntastic'
-Plugin 'jalvesaq/Nvim-R'
-Plugin 'tyru/open-browser.vim'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'edkolev/tmuxline.vim'
-Plugin 'jimhester/lintr'
-Plugin 'mkitt/tabline.vim'
-Plugin 'kannokanno/previm'
-"Plugin 'suan/vim-instant-markdown'
-Plugin 'wesQ3/vim-windowswap'
-Plugin 'vim-pandoc/vim-pandoc'
-Plugin 'vim-pandoc/vim-pandoc-syntax'
-"Plugin 'vim-pandoc/vim-rmarkdown'
-Plugin 'vim-scripts/matchit.zip'
+call plug#begin()
+Plug 'Valloric/YouCompleteMe'
+Plug 'vim-syntastic/syntastic'
+Plug 'jalvesaq/Nvim-R'
+Plug 'tyru/open-browser.vim'
+Plug 'airblade/vim-gitgutter'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'edkolev/tmuxline.vim'
+Plug 'jimhester/lintr'
+Plug 'mkitt/tabline.vim'
+Plug 'kannokanno/previm'
+"Plug 'suan/vim-instant-markdown'
+Plug 'wesQ3/vim-windowswap'
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax'
+"Plug 'vim-pandoc/vim-rmarkdown'
+Plug 'vim-scripts/matchit.zip'
+Plug 'craigemery/vim-autotag'
+"Plug 'junegunn/fzf'
+"Plug 'soywod/himalaya'
 
 "colorschemes (see https://vimcolors.com/):
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'atahabaki/archman-vim'
-Plugin 'sickill/vim-monokai'
-Plugin 'jdsimcoe/hyper.vim'
-Plugin 'megantiu/true.vim'
-Plugin 'cormacrelf/vim-colors-github'
-call vundle#end()
+Plug 'altercation/vim-colors-solarized'
+"Plug 'atahabaki/archman-vim'
+Plug 'sickill/vim-monokai'
+Plug 'jdsimcoe/hyper.vim'
+Plug 'megantiu/true.vim'
+Plug 'cormacrelf/vim-colors-github'
+call plug#end()
 filetype plugin indent on
 
 "execute pathogen#infect()
@@ -69,7 +70,7 @@ set ignorecase		" Do case insensitive matching
 set smartcase		" Do smart case matching
 set incsearch		" Incremental search
 "set autowrite		" Automatically save before commands like :next and :make
-"set hidden         " Hide buffers when they are abandoned
+set hidden         " Hide buffers when they are abandoned
 
 " Source a global configuration file if available
 if filereadable("/etc/vim/vimrc.local")
@@ -192,10 +193,20 @@ let g:airline_symbols.readonly = ''
 set wildmenu
 set wildmode=list:full
 
+"----------------------------------------
+"---------   soywod/himalaya   ----------
+"----------------------------------------
+
+let g:himalaya_mailbox_picker = 'native'
 
 "----------------------------------------
 "-------------   Nvim-R   ---------------
 "----------------------------------------
+
+" Set color schemes with `colorout` package in `.Rprofile`
+
+"omni-completion
+set omnifunc=syntaxcomplete#Complee
 
 let R_source = '/home/smexus/tmux_split.vim'
 " https://github.com/jcfaria/Vim-R-plugin/issues/204
@@ -255,6 +266,7 @@ nnoremap <leader>m :PrevimOpen<cr>
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
+set encoding=utf-8
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
@@ -296,13 +308,19 @@ function! SyntasticCheckHook(errors)
 endfunction
 
 let g:syntastic_r_lintr_quiet_messages = {"regex": 
-    \ ['Only use double-quotes.', 'Opening curly braces should never',
-    \ 'No visible global function definition', 'Commented code should be removed',
+    \ ['Commented code should be removed',
     \ 'Remove spaces before the left parenthesis']}
 let g:syntastic_rmd_lintr_quiet_messages = {"regex": 
-    \ ['Only use double-quotes.', 'Opening curly braces should never',
-    \ 'No visible global function definition', 'Commented code should be removed',
+    \ ['Commented code should be removed',
     \ 'Remove spaces before the left parenthesis']}
+"let g:syntastic_r_lintr_quiet_messages = {"regex": 
+"    \ ['Only use double-quotes.', 'Opening curly braces should never',
+"    \ 'No visible global function definition', 'Commented code should be removed',
+"    \ 'Remove spaces before the left parenthesis']}
+"let g:syntastic_rmd_lintr_quiet_messages = {"regex": 
+"    \ ['Only use double-quotes.', 'Opening curly braces should never',
+"    \ 'No visible global function definition', 'Commented code should be removed',
+"    \ 'Remove spaces before the left parenthesis']}
 " syntastic has :Error, so this is required for :E to work again
 " (https://github.com/vim-syntastic/syntastic/issues/164)
 command! E Ex
@@ -360,7 +378,7 @@ endfunction
 " time, follow the instructions in ":h mysyntaxfile-add": 
 " Make a new directory in /.vim/after/sytax, with "tex.vim" holding this syn
 " command. 
-" Add a work to the `spellfile` with `zg`
+" Add a word to the `spellfile` with `zg`
 " The mysyntaxfile-add instructions also have lots of details about custom
 " colour highlight schemes and the likes.
 set spell spelllang=en_gb
