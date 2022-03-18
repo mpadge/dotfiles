@@ -25,7 +25,9 @@ HISTFILESIZE=10000
 export HISTCONTROL=ignoredups:erasedups  # no duplicate entries
 shopt -s histappend                      # append to history, don't overwrite it
 # Save and reload the history after each command finishes
-export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+#export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+#export PROMPT_COMMAND='echo -ne "\033]0;YOUR TITLE GOES HERE\007"'
+export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ;} history -a"
 
 export BROWSER=firefox # for default xdg-open in /bin/user/xdg-open
 
@@ -223,3 +225,81 @@ LS_COLORS='rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:c
 export LS_COLORS
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+[ -f /opt/miniconda3/etc/profile.d/conda.sh ] && source /opt/miniconda3/etc/profile.d/conda.sh
+
+# gtags exports
+# https://cvs.savannah.gnu.org/viewvc/global/global/plugin-factory/PLUGIN_HOWTO.pygments?revision=1.6&view=markup
+# export these variables to extend parsing to all ctags-supported languages -
+# makes 'gtags' much slower, and makes little difference to pkgstats results
+# anyway.
+#export GTAGSCONF=/usr/local/share/gtags/gtags.conf
+#export GTAGSLABEL=pygments
+
+# ------------------------------------
+#     a few colours
+# ------------------------------------
+
+BLACK='\e[0;30m'
+BLUE='\e[0;34m'
+GREEN='\e[0;32m'
+CYAN='\e[0;36m'
+RED='\e[0;31m'
+
+PURPLE='\e[0;35m'
+BROWN='\e[0;33m'
+LIGHTGRAY='\e[0;37m'
+DARKGRAY='\e[1;30m'
+LIGHTBLUE='\e[1;34m'
+LIGHTGREEN='\e[1;32m'
+LIGHTCYAN='\e[1;36m'
+LIGHTRED='\e[1;31m'
+LIGHTPURPLE='\e[1;35m'
+YELLOW='\e[1;33m'
+WHITE='\e[1;37m'
+NC='\e[0m' # No Color
+
+# ------------------------------------
+#     startup
+# ------------------------------------
+
+OS="$(cat /etc/lsb-release | grep 'DESCRIPTION' | sed 's/^.*=//g')"
+OS="$(echo $OS | sed 's/\"//g')"
+CPU="$(lscpu | grep 'Model name' | tr -s ' ' | cut -d ' ' -f 5-8)"
+NCPUS="$(nproc --all)"
+PID="$(cat /proc/$$/stat | cut -d \  -f 4)"
+CONSOLE="$(ps -o cmd -f -p ${PID} | tail -1 | sed 's/ .*$//')"
+#HOST="$(hostnamectl | grep 'hostname' | sed 's/^.: //')"
+HOST="$(nmcli general hostname)"
+KERNEL="$(uname -srm | cut -d \  -f 2)"
+NPKGS="$(pacman -Q | wc -l)"
+NRPKGS="$(Rscript -e 'nrow(installed.packages())' | tr -s ' ' | cut -d ' ' -f 2)"
+DSRPKGS="$(du -sh /usr/local/lib/R/site-library | cut -f 1)"
+
+MEMUSED="$(vmstat -s | grep 'used memory' | tr -s ' ' | cut -d ' ' -f 2)"
+MEMTOT="$(vmstat -s | grep 'total memory' | tr -s ' ' | cut -d ' ' -f 2)"
+MEMPC=$(echo "scale=2;100*$MEMUSED/$MEMTOT" | bc -l)
+MEMUSED=$(echo "scale=2;$MEMUSED/1024/1024" | bc -l)
+MEMTOT=$(echo "scale=2;$MEMTOT/1024/1024" | bc -l)
+DSROOTSIZE=$(df -h / | tail -n 1 | tr -s ' ' | cut -d ' ' -f 2)
+DSROOTUSED=$(df -h / | tail -n 1 | tr -s ' ' | cut -d ' ' -f 3)
+DSROOTPC=$(df -h / | tail -n 1 | tr -s ' ' | cut -d ' ' -f 5)
+DSDATASIZE=$(df -h /data | tail -n 1 | tr -s ' ' | cut -d ' ' -f 2)
+DSDATAUSED=$(df -h /data | tail -n 1 | tr -s ' ' | cut -d ' ' -f 3)
+DSDATAPC=$(df -h /data | tail -n 1 | tr -s ' ' | cut -d ' ' -f 5)
+
+HLINE=$(printf '%40s\n' | tr ' ' -)
+#printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
+
+echo -e ""
+echo -e "$BLUE                A                 $LIGHTBLUE\e[1m         OS: $NC $OS"
+echo -e "$BLUE               ooo                $LIGHTBLUE\e[1m       Host: $NC $HOST"
+echo -e "$BLUE              ooooo               $LIGHTBLUE\e[1m     Kernel: $NC $KERNEL"
+echo -e "$BLUE             ooooooo              $LIGHTBLUE\e[1m        Cpu: $NC $CPU"
+echo -e "$BLUE            ooooooooo             $LIGHTBLUE\e[1m      Ncpus: $NC $NCPUS"
+echo -e "$BLUE           ooooo ooooo            $LIGHTGREEN$HLINE$NC"
+echo -e "$BLUE          ooooo   ooooo           $LIGHTBLUE\e[1m     Memory: $NC $MEMUSED / $MEMTOT GB (${MEMPC}%)"
+echo -e "$BLUE         ooooo     ooooo          $LIGHTBLUE\e[1m    Disk(/): $NC $DSROOTUSED / $DSROOTSIZE GB (${DSROOTPC})"
+echo -e "$BLUE        ooooo       ooooo         $LIGHTBLUE\e[1mDisk(/data): $NC $DSDATAUSED / $DSDATASIZE GB (${DSDATAPC})"
+echo -e "$BLUE       ooooo  $WHITE<oooooooooo>        $LIGHTGREEN$HLINE$NC"
+echo -e "$BLUE      ooooo      $WHITE<oooooooo>       $LIGHTBLUE\e[1m   Packages: $NC $NPKGS"
+echo -e "$BLUE     ooooo          $WHITE<oooooo>      $LIGHTBLUE\e[1m R Packages: $NC $NRPKGS ($DSRPKGS)"
