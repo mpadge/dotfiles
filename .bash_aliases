@@ -11,7 +11,7 @@ alias scan='nmcli dev wifi list'
 alias l="tree -L 1"
 alias gl="git ls-tree -r master"
 alias battery="acpi -V | grep 'Battery'"
-alias update="sudo pacman -Syu; yay -Syu"
+alias update="sudo pacman -Syu; paru -Syu"
 alias updater="echo 'update.packages(ask=FALSE)' | sudo R --no-save -q"
 alias rupdate="echo 'update.packages(ask=FALSE)' | sudo R --no-save -q"
 alias backup="bash <path>/<to>/<my>/<rsync>/<script>"
