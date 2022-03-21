@@ -220,7 +220,7 @@ nmap <Space> <Plug>RDSendLine
 " stop the plugin remapping underscore to '->':
 let R_assign = 0
 
-let g:R_in_buffer = 0
+let g:R_external_term = 0
 let g:R_applescript = 0
 "let g:R_tmux_split = 1
 let g:R_rconsole_height = winheight(0)
