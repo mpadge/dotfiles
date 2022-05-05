@@ -12,7 +12,7 @@ elif [ "$1" == "done" ]; then
 elif [[ "$1" =~ ^[0-9]+$ ]]; then
     Rscript -e "mpmisc::open_gh_notification ($1)"
 elif [ "$1" == "commits" ]; then
-    Rscript -e "mpmisc::gh_daily_commits ()"
+    Rscript -e "mpmisc::gh_contributions ()"
 elif [ "$1" == "help" ]; then
     echo -e "${SYM} ${ARG}no arguments${NC} : ${TXT}Display new GitHub notifications.${NC}"
     echo -e "${SYM} ${ARG}help${NC}         : ${TXT}Display these help messages.${NC}"
