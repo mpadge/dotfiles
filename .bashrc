@@ -207,6 +207,9 @@ export VIMRUNTIME=/usr/share/vim/vim82
 export PATH=/usr/local/lib/depot_tools:"$PATH"  
 # for ruby; see https://wiki.archlinux.org/index.php/ruby#Setup
 export PATH="$PATH:$(ruby -e 'puts Gem.user_dir')/bin"
+# for pre-commit
+export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$HOME/.gitbin"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -303,3 +306,4 @@ echo -e "$BLUE        ooooo       ooooo         $LIGHTBLUE\e[1mDisk(/data): $NC 
 echo -e "$BLUE       ooooo  $WHITE<oooooooooo>        $LIGHTGREEN$HLINE$NC"
 echo -e "$BLUE      ooooo      $WHITE<oooooooo>       $LIGHTBLUE\e[1m   Packages: $NC $NPKGS"
 echo -e "$BLUE     ooooo          $WHITE<oooooo>      $LIGHTBLUE\e[1m R Packages: $NC $NRPKGS ($DSRPKGS)"
+export PATH="$PATH:$HOME/miniconda/bin"
