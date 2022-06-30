@@ -1,0 +1,12 @@
+#!/usr/bin/bash
+
+if [ "$1" == "" ]; then
+    git clean -ndfx
+elif [ "$1" == "out" ]; then
+    git clean -ndfx
+elif [ "$1" == "in" ]; then
+    git ls-tree -r main
+else
+    echo "git list only accepts 'in' or 'out'"
+    exit 1
+fi
