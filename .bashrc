@@ -201,7 +201,7 @@ function title () {
     echo -ne "\033]0;${1}\007"
 }
 
-export VIMRUNTIME=/usr/share/vim/vim82
+export VIMRUNTIME=/usr/share/vim/vim90
 
 # for js V8; see http://blog.scaleprocess.net/building-v8-on-arch-linux/
 export PATH=/usr/local/lib/depot_tools:"$PATH"  
