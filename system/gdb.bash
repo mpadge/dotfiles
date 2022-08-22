@@ -4,8 +4,14 @@ echo "---------------------------------------------------"
 echo "         Debug an R script with gdb"
 echo "---------------------------------------------------"
 
-read -p "Enter name of script: " SCRIPT
-echo $SCRIPT
+read -p "Enter name of script (empty = default 'script.R'): " SCRIPT
 
 Rscript -e "mpmisc::gdb ()"
-R -d gdb -e "source('$SCRIPT')"
+
+if [ "$SCRIPT" == "" ]; then
+    R -d gdb -e "source('script.R')"
+else
+    R -d gdb -e "source('$SCRIPT')"
+fi
+
+
