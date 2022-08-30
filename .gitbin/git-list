@@ -5,7 +5,7 @@ if [ "$1" == "" ]; then
 elif [ "$1" == "out" ]; then
     git clean -ndfx
 elif [ "$1" == "in" ]; then
-    git ls-tree -r main
+    git ls-tree -r HEAD
 else
     echo "git list only accepts 'in' or 'out'"
     exit 1
