@@ -6,7 +6,7 @@ echo "---------------------------------------------------"
 
 read -p "Enter name of script (empty = default 'script.R'): " SCRIPT
 
-Rscript -e "mpmisc::debug ()"
+Rscript -e "mpmisc::debug(); pkgbuild::compile_dll()"
 
 DEBUGGER=gdb
 
@@ -15,5 +15,3 @@ if [ "$SCRIPT" == "" ]; then
 else
     R -d $DEBUGGER -e "source('$SCRIPT')"
 fi
-
-
