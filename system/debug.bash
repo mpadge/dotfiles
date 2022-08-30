@@ -1,17 +1,19 @@
 #!/usr/bin/bash
 
 echo "---------------------------------------------------"
-echo "         Debug an R script with gdb"
+echo "         Debug an R script with gdb or lldb"
 echo "---------------------------------------------------"
 
 read -p "Enter name of script (empty = default 'script.R'): " SCRIPT
 
-Rscript -e "mpmisc::gdb ()"
+Rscript -e "mpmisc::debug ()"
+
+DEBUGGER=gdb
 
 if [ "$SCRIPT" == "" ]; then
-    R -d gdb -e "source('script.R')"
+    R -d $DEBUGGER -e "source('script.R')"
 else
-    R -d gdb -e "source('$SCRIPT')"
+    R -d $DEBUGGER -e "source('$SCRIPT')"
 fi
 
 
