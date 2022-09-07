@@ -1,7 +1,10 @@
 #!/usr/bin/bash
 
+# The "-x" flag on git clean overrides normal .gitignore rules, so lists
+# everything. Default is to obey .gitignore and only list others
+
 if [ "$1" == "" ]; then
-    git clean -ndfx
+    git clean -ndf
 elif [ "$1" == "out" ]; then
     git clean -ndfx
 elif [ "$1" == "in" ]; then
