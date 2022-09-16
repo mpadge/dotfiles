@@ -14,7 +14,6 @@ elif [[ "$1" =~ ^[0-9]+$ ]]; then
 elif [ "$1" == "commits" ]; then
     if [ "$2" == "" ]; then
         Rscript -e "mpmisc::gh_contributions ()"
-        Rscript -e "mpmisc::gh_daily_contributions(0)"
     else
         Rscript -e "mpmisc::gh_daily_contributions($2)"
     fi
