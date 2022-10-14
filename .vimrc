@@ -34,6 +34,7 @@ Plug 'sickill/vim-monokai'
 Plug 'jdsimcoe/hyper.vim'
 Plug 'megantiu/true.vim'
 Plug 'cormacrelf/vim-colors-github'
+Plug 'preservim/tagbar'
 call plug#end()
 filetype plugin indent on
 
@@ -235,6 +236,12 @@ let R_tmux_title = 'R-'.split(getcwd(),'/')[-1]
 
 let r_syntax_folding = 1
 
+
+"-------------------------------------------
+"---------------   Tagbar   ----------------
+"-------------------------------------------
+
+nmap <F8> :TagbarToggle<CR>
 
 "-------------------------------------------
 "---------------   previm   ----------------
