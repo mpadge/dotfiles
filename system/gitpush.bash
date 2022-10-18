@@ -68,4 +68,9 @@ if [ -n "$REMOTE" ]; then # -n -> is non-zero string
     echo -n "--------Pushing to sourcehut "
     git push originsh $BRANCH
 fi
-
+REMOTE=$(git remote -v | grep "origincb" | head -n 1) # codeberg
+if [ -n "$REMOTE" ]; then # -n -> is non-zero string
+    echo ""
+    echo -n "--------Pushing to codeberg "
+    git push origincb $BRANCH
+fi
