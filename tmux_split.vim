@@ -1,5 +1,3 @@
-" https://raw.githubusercontent.com/jalvesaq/Nvim-R/master/R/tmux_split.vim
-
 if $TMUX == ''
     finish
 endif
@@ -8,7 +6,7 @@ if exists("*TmuxActivePane")
     finish
 endif
 
-let g:R_in_buffer = 0
+let g:R_external_term = 1
 let g:R_applescript = 0
 let g:rplugin.tmux_split = 1
 let g:R_tmux_title = get(g:, 'R_tmux_title', 'NvimR')
@@ -50,10 +48,12 @@ function! StartR_ExternalTerm(rcmd)
         if g:R_rconsole_width == -1
             let tcmd .= "-h"
         else
-            let tcmd .= "-h -l " . g:R_rconsole_width
+            let tcmd .= "-h"
+            "let tcmd .= "-h -l " . g:R_rconsole_width
         endif
     else
-        let tcmd .= "-l " . g:R_rconsole_height
+        "let tcmd .= "-l " . g:R_rconsole_height
+        let tcmd .= "-h"
     endif
 
     " Let Tmux automatically kill the panel when R quits.
@@ -64,7 +64,7 @@ function! StartR_ExternalTerm(rcmd)
         call RWarningMsg(rlog)
         return
     endif
-    let s:rplugin_rconsole_pane = TmuxActivePane()
+    let g:rplugin.rconsole_pane = TmuxActivePane()
     let rlog = system("tmux select-pane -t " . g:rplugin.editor_pane)
     if v:shell_error
         call RWarningMsg(rlog)
@@ -96,18 +96,14 @@ function SendCmdToR_TmuxSplit(...)
         let cmd = a:1
     endif
 
-    if !exists("s:rplugin_rconsole_pane")
-        " Should never happen
-        call RWarningMsg("Missing internal variable: s:rplugin_rconsole_pane")
-    endif
     let str = substitute(cmd, "'", "'\\\\''", "g")
     if str =~ '^-'
         let str = ' ' . str
     endif
     if a:0 == 2 && a:2 == 0
-        let scmd = "tmux set-buffer '" . str . "' && tmux paste-buffer -t " . s:rplugin_rconsole_pane
+        let scmd = "tmux set-buffer '" . str . "' && tmux paste-buffer -t " . g:rplugin.rconsole_pane
     else
-        let scmd = "tmux set-buffer '" . str . "\<C-M>' && tmux paste-buffer -t " . s:rplugin_rconsole_pane
+        let scmd = "tmux set-buffer '" . str . "\<C-M>' && tmux paste-buffer -t " . g:rplugin.rconsole_pane
     endif
     let rlog = system(scmd)
     if v:shell_error
