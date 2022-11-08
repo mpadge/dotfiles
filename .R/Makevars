@@ -6,7 +6,7 @@ COMP=clang
 #COMPXX=g++
 #COMP=g++
 
-WFLAGS=-Wall -pedantic -Wconverion -Wstrict-prototypes
+WFLAGS=-Wall -pedantic -Wconversion -Wstrict-prototypes
 
 EXCL_A=/usr/local/lib/R/site-library/Rcpp/include
 EXCL_B=/usr/local/lib/R/site-library/RcppArmadillo/include
