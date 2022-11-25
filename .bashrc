@@ -29,7 +29,7 @@ shopt -s histappend                      # append to history, don't overwrite it
 #export PROMPT_COMMAND='echo -ne "\033]0;YOUR TITLE GOES HERE\007"'
 export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ;} history -a"
 
-export BROWSER=firefox # for default xdg-open in /bin/user/xdg-open
+# export BROWSER=firefox # for default xdg-open in /bin/user/xdg-open
 
 # https://github.com/wting/autojump
 [[ -s $HOME/.autojump/etc/profile.d/autojump.sh ]] && source $HOME/.autojump/etc/profile.d/autojump.sh
@@ -265,7 +265,7 @@ NC='\e[0m' # No Color
 #     startup
 # ------------------------------------
 
-OS="$(cat /etc/lsb-release | grep 'DESCRIPTION' | sed 's/^.*=//g')"
+OS="$(cat /etc/os-release | grep 'PRETTY_NAME' | sed 's/^.*=//g')"
 OS="$(echo $OS | sed 's/\"//g')"
 CPU="$(lscpu | grep 'Model name' | tr -s ' ' | cut -d ' ' -f 5-8)"
 NCPUS="$(nproc --all)"
