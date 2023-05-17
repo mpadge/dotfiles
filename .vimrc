@@ -34,7 +34,11 @@ Plug 'sickill/vim-monokai'
 Plug 'jdsimcoe/hyper.vim'
 Plug 'megantiu/true.vim'
 Plug 'cormacrelf/vim-colors-github'
+"Plug 'jreybert/vimagit'
 Plug 'preservim/tagbar'
+"Plug 'jupyter-vim/jupyter-vim'
+"Plug 'pangloss/vim-javascript'
+Plug 'Exafunction/codeium.vim'
 call plug#end()
 filetype plugin indent on
 
@@ -125,6 +129,9 @@ nnoremap <C-L> :nohls<cr>
 noremap <C-m> :!make<cr>
 nmap <leader>w :w!<cr>
 nmap <C-x> :qa<cr>
+" Codeium
+imap <C-n> <Cmd>call codeium#CycleCompletions(1)<CR>
+imap <C-b> <Cmd>call codeium#CycleCompletions(-1)<CR>
 " syntastic
 nmap [l :lprev<cr> 
 nmap ]l :lnext<cr> 
@@ -145,6 +152,8 @@ nnoremap <leader>sv :source $MYVIMRC<cr>
 
 " paste from clipboard
 map <F4> :r!xclip -o<CR>
+" copy to clipboard
+map <F5> :r!xclip -sel c<CR>
 
 "------------------------------------
 " Showmarks
@@ -353,6 +362,17 @@ endfunction
 
 " set same widths for text files too
 autocmd BufNewFile,BufRead *.txt set textwidth=144 | set colorcolumn=150
+
+
+"-------------------------------------------
+"------------   jupyter-vim   --------------
+"-------------------------------------------
+
+if has('nvim')
+        let g:python3_host_prog = '/path/to/python/bin/python3'
+else
+        set pyxversion=3
+endif
 
 " =============== WORD COUNT FUNCTION =============
 " From http://stackoverflow.com/questions/2974954/correct-word-count-of-a-latex-document
