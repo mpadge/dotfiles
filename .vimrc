@@ -130,8 +130,11 @@ noremap <C-m> :!make<cr>
 nmap <leader>w :w!<cr>
 nmap <C-x> :qa<cr>
 " Codeium
+let g:codeium_map_no_tab = v:true
 imap <C-n> <Cmd>call codeium#CycleCompletions(1)<CR>
 imap <C-b> <Cmd>call codeium#CycleCompletions(-1)<CR>
+imap <script><silent><nowait><expr> <C-a> codeium#Accept()
+
 " syntastic
 nmap [l :lprev<cr> 
 nmap ]l :lnext<cr> 
