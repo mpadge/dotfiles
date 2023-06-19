@@ -22,3 +22,7 @@ else
     echo "Parameter not recognised; see 'printer help' for details"
     exit 1
 fi
+
+# Printer queue manipulation:
+# lpq -a
+# lprm <Job Number>
