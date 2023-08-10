@@ -318,8 +318,10 @@ let g:syntastic_cpp_clang_check_quiet_messages = {"regex":
 " jimhester/lintr:
 let g:syntastic_enable_r_lintr_checker = 1
 let g:syntastic_r_checkers = ['lintr']
+let g:syntastic_r_lintr_linters = "linters_with_defaults(indentation_linter=indentation_linter(4))"
 let g:syntastic_enable_rmd_lintr_checker = 1
 let g:syntastic_rmd_checkers = ['lintr']
+let g:syntastic_rmd_lintr_linters = "linters_with_defaults(indentation_linter=indentation_linter(4))"
 function! SyntasticCheckHook(errors)
     if !empty(a:errors)
         let g:syntastic_loc_list_height = min([len(a:errors), 10])
