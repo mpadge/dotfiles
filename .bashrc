@@ -212,6 +212,8 @@ export VIMRUNTIME=/usr/share/vim/vim90
 export PATH=/usr/local/lib/depot_tools:"$PATH"  
 # for ruby; see https://wiki.archlinux.org/index.php/ruby#Setup
 export PATH="$PATH:$(ruby -e 'puts Gem.user_dir')/bin"
+# for rust
+export PATH=~/.cargo/bin:"$PATH"
 # for pre-commit
 export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:$HOME/.gitbin"
