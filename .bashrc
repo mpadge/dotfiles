@@ -118,6 +118,11 @@ if [ -f ~/.bash_aliases ]; then
 fi
 alias code="cd /data/mega/code/repos"
 
+# Source autojump, so it works in plain bash, as well as tmux
+if [ -f /etc/profile.d/autojump.bash ]; then
+    . /etc/profile.d/autojump.bash
+fi
+
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
