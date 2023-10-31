@@ -10,12 +10,13 @@ USER='user-name'
 MODEMURL='https://mymodel.myfritz.net:444/myfritz'
 
 STATUS=$(tailscale status | grep ${MACHINE})
-IS_SLEEPING='relay'
 
 if [ "$1" == "" ]; then
     ssh ${USER}@${MACHINE}
 elif [ "$1" == "status" ]; then
-    if grep -q "${IS_SLEEPING}" <<< "${STATUS}"; then
+    if grep -q 'relay' <<< "${STATUS}"; then
+        echo -e "${SYM} ${ARG}${MACHINE}${TXT} is sleeping${NC}"
+    elif grep -q 'offline' <<< "${STATUS}"; then
         echo -e "${SYM} ${ARG}${MACHINE}${TXT} is sleeping${NC}"
     else
         echo -e "${SYM} ${ARG}${MACHINE}${TXT} is active${NC}"
