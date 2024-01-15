@@ -283,7 +283,8 @@ HOST="$(nmcli general hostname)"
 KERNEL="$(uname -srm | cut -d \  -f 2)"
 NPKGS="$(pacman -Q | wc -l)"
 NRPKGS="$(Rscript -e 'nrow(installed.packages())' | tr -s ' ' | cut -d ' ' -f 2)"
-DSRPKGS="$(du -sh /usr/local/lib/R/site-library | cut -f 1)"
+# DSRPKGS="$(du -sh /usr/local/lib/R/site-library | cut -f 1)"
+DSRPKGS="$(du -sh /usr/lib/R/library | cut -f 1)"
 
 MEMUSED="$(vmstat -s | grep 'used memory' | tr -s ' ' | cut -d ' ' -f 2)"
 MEMTOT="$(vmstat -s | grep 'total memory' | tr -s ' ' | cut -d ' ' -f 2)"
@@ -300,6 +301,15 @@ DSDATAPC=$(df -h /data | tail -n 1 | tr -s ' ' | cut -d ' ' -f 5)
 HLINE=$(printf '%40s\n' | tr ' ' -)
 #printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
 
+# https://texteditor.com/multiline-text-art/
+
+echo -e ""
+echo -e "$GREEN ████████╗██╗  ██╗███████╗    ██████╗  ██████╗ ██╗  ██╗ "
+echo -e "$GREEN ╚══██╔══╝██║  ██║██╔════╝    ██╔══██╗██╔═══██╗╚██╗██╔╝ "
+echo -e "$GREEN    ██║   ███████║█████╗      ██████╔╝██║   ██║ ╚███╔╝  "
+echo -e "$GREEN    ██║   ██╔══██║██╔══╝      ██╔══██╗██║   ██║ ██╔██╗  "
+echo -e "$GREEN    ██║   ██║  ██║███████╗    ██████╔╝╚██████╔╝██╔╝ ██╗ "
+echo -e "$GREEN    ╚═╝   ╚═╝  ╚═╝╚══════╝    ╚═════╝  ╚═════╝ ╚═╝  ╚═╝ "
 echo -e ""
 echo -e "$BLUE                A                 $LIGHTBLUE\e[1m         OS: $NC $OS"
 echo -e "$BLUE               ooo                $LIGHTBLUE\e[1m       Host: $NC $HOST"
