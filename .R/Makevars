@@ -1,32 +1,34 @@
+# Note that this only applies to non-sudo install. The sudo-version is at
+# /root/.R/Makevars
 VER=
 CCACHE=ccache
 #CCACHE=
 COMPXX=clang++
 COMP=clang
 #COMPXX=g++
-#COMP=g++
+#COMP=gcc
 
-WFLAGS=-Wall -pedantic -Wconversion -Wstrict-prototypes
+WFLAGS=-Wall -pedantic -Wconversion -Wstrict-prototypes -Wno-ignored-optimization-argument
 
-EXCL_A=/usr/local/lib/R/site-library/Rcpp/include
-EXCL_B=/usr/local/lib/R/site-library/RcppArmadillo/include
-EXCL_C=/usr/local/lib/R/site-library/RcppParallel/include
-EXCL_D=/usr/local/lib/R/site-library/cpp11/include
-EXCL_E=/usr/local/lib/R/site-library/RcppThread/include
+EXCL_A=/usr/lib/R/library/Rcpp/include
+EXCL_B=/usr/lib/R/library/RcppArmadillo/include
+EXCL_C=/usr/lib/R/library/RcppParallel/include
+EXCL_D=/usr/lib/R/library/cpp11/include
+EXCL_E=/usr/lib/R/library/RcppThread/include
 
-CXX=$(CCACHE) $(COMPXX)$(VER)
-CXXFLAGS= -O $(WFLAGS) -ferror-limit=100 -isystem $(EXCL_A) -isystem $(EXCL_B) -isystem $(EXCL_C) -isystem $(EXCL_D) -isystem $(EXCL_E)
+CXX=$(CCACHE) $(COMPXX)
+CXX11=$(CCACHE) $(COMPXX)
+CXX17=$(CCACHE) $(COMPXX)
+CXX17STD=--std=c++17
+CXX1X=$(CCACHE) $(COMPXX)
+CXX17FALGS=$(CXXFLAGS)
+CXXFLAGS=-O $(WFLAGS) -isystem $(EXCL_A) -isystem $(EXCL_B) -isystem $(EXCL_C) -isystem $(EXCL_D) -isystem $(EXCL_E)
 #CXXFLAGS= -O -Wall -pedantic
 
-CXX11=$(CCACHE) $(COMPXX)$(VER)
-CXX11FLAGS= -O $(WFLAGS) -ferror-limit=100 -isystem $(EXCL_A) -isystem $(EXCL_B) -isystem $(EXCL_C) -isystem $(EXCL_D) -isystem $(EXCL_E)
-#CXX11FLAGS= -O -Wall -pedantic
+#SHLIB_CXXLD=clang++
 
-CXX14=$(CCACHE) $(COMPXX)$(VER)
-CXX14FLAGS= -O $(WFLAGS) -ferror-limit=100 -isystem $(EXCL_A) -isystem $(EXCL_B) -isystem $(EXCL_C) -isystem $(EXCL_D) -isystem $(EXCL_E)
-#CXX14FLAGS= -O -Wall -pedantic
-
-CC=$(CCACHE) $(COMP)$(VER)
+CC=$(CCACHE) $(COMP)
+CCFLAGS=-O -Wno-ignored-optimization-argument
 
 FC=$(CCACHE) gfortran$(VER)
 F77=$(CCACHE) gfortran$(VER)
