@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if ! ps aux | grep "/usr/local/searxng" > /dev/null; then
+if ! ps aux | grep -v grep "/usr/local/searxng" > /dev/null; then
     if ! systemctl is-active docker.service > /dev/null; then
         echo "Docker service is not running. Starting it now..."
         sudo systemctl start docker.service
