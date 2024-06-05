@@ -1,7 +1,6 @@
 #local ({
         r <- getOption('repos')
-        r['CRAN'] <- 'https://cran.uni-muenster.de'
-        #r['CRAN'] <- 'https://cran.wu.ac.at'
+        r['CRAN'] <- 'https://cloud.r-project.org'
         options(repos=r)
         rm (r)
 #        })
@@ -11,7 +10,7 @@
 # nvimcom, then they can be reset.
 #.libPaths(c ('/usr/local/lib/R/site-library', .libPaths ()))
 .libPaths(c ('/usr/lib/R/library', .libPaths ()))
-.libPaths(c ('~/R/x86_64-pc-linux-gnu-library/4.0', .libPaths ()))
+.libPaths(c ('~/R/x86_64-pc-linux-gnu-library/4.4', .libPaths ()))
  
 #options (stringsAsFactors=FALSE)
 #options (max.print=100)
@@ -21,15 +20,37 @@ options (editor='vim')
 options (browser='firefox')
 #options (prompt='R> ', digits=4)
 
+utils::rc.settings(ipck=TRUE) # tab-complete package names
+
 .env <- new.env()
 .env$setpar <- function (mar=c(3, 3, 2, 1), mgp=c(1.7, 0.3, 0))
 {
     par (mar=mar, mgp=mgp)
 }
+
+.env$myfoghorn <- function (email = "mark.padgham@email.com") {
+    x <- foghorn::summary_cran_results (email = email)
+    for (type in c ("error", "fail", "warn", "note")) {
+        p <- x$package [x [[type]] > 0]
+        if (length (p) > 0) {
+            for (i in p) {
+                print (cli::rule (left = i))
+                xi <- foghorn::cran_details (pkg = i)
+                for (j in seq (nrow (xi))) {
+                    print (cli::boxx (paste0 (xi$result [j],
+                                              " (N = ", xi$n_flavors [j], ")"),
+                                      padding = c (0, 5, 0, 5)))
+                    message (xi$message [j])
+                }
+            }
+        }
+    }
+}
 attach(.env)
 
 .First <- function(){
     if(interactive()){
+
         # see :h nvimcom-not-loaded
         #if (Sys.getenv ("NVIMR_TMPDIR") == "")
         #        options (defaultPackages = c ("utils", "grDevices", "graphics",
@@ -40,15 +61,15 @@ attach(.env)
 
         if ('colorout' %in% rownames (utils::installed.packages ()))
         {
-            #library (colorout)
+            require (colorout, quietly = TRUE)
             # default normal green too faint for light bg
             #colorout::show256Colors() # to see colours
             #colorout::setOutputColors (normal = 0, string = 208, stderror = 21,
             #                           verbose = FALSE)
             # and this for dark bg:
-            #colorout::setOutputColors (normal = 244, string = 208, stderror = 21,
-            #                           verbose = FALSE)
-            colorout::setOutputColors (verbose = FALSE)
+            colorout::setOutputColors (normal = 244, string = 208, stderror = 21,
+                                       verbose = FALSE)
+            #colorout::setOutputColors (verbose = FALSE)
         }
 
         rv <- R.Version ()$version.string
@@ -72,6 +93,8 @@ attach(.env)
         gap <- 2 # number of character before and after
         nci <- sapply (lns, nchar, USE.NAMES=FALSE)
         gaplen <- floor (nc + 2 * gap - nci) / 2
+
+        message ("\n")
 
         #for (i in 2500:2600)
         #    cat(eval(parse(text=paste("\"\\u", i, "\"", sep=""))), " ")
@@ -120,7 +143,7 @@ attach(.env)
                 cli::cli_h2 ("foghorn results")
                 x <- foghorn::summary_cran_results (email = "mark.padgham@email.com")
                 if (sum (x [, c ("error", "fail", "warn", "note")]) > 0)
-                    cli::cli_text ("Run 'myfoghorn()' for details")
+                    cli::cli_text ("Run '.env$myfoghorn()' for details")
             }
         } else {
             message ('nope, no internet\n')
@@ -149,25 +172,3 @@ if (vw) {
     rm (nr, th)
 }
 rm (vw)
-
-#if(Sys.getenv('TERM') == 'xterm-256color')
-#    library('colorout')
-
-myfoghorn <- function (email = "mark.padgham@email.com") {
-    x <- foghorn::summary_cran_results (email = email)
-    for (type in c ("error", "fail", "warn", "note")) {
-        p <- x$package [x [[type]] > 0]
-        if (length (p) > 0) {
-            for (i in p) {
-                print (cli::rule (left = i))
-                xi <- foghorn::cran_details (pkg = i)
-                for (j in seq (nrow (xi))) {
-                    print (cli::boxx (paste0 (xi$result [j],
-                                              " (N = ", xi$n_flavors [j], ")"),
-                                      padding = c (0, 5, 0, 5)))
-                    message (xi$message [j])
-                }
-            }
-        }
-    }
-}
