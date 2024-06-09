@@ -15,4 +15,4 @@ if ! pgrep -f "/usr/local/searxng/dockerfiles/docker-entrypoint.sh" > /dev/null;
     fi
 fi
 
-xdg-open http://127.0.0.1:8080
+xdg-open http://127.0.0.1:8080 &
