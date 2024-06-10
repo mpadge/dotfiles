@@ -3,7 +3,7 @@ alias home="cd ~"
 alias xf=startxfce4
 alias code="cd <path>/<to>/<my>/<repos>"
 #alias a="if [ -z \"${TMUX_PANE}\" ]; then tmux; else echo 'nope'; fi; vim aaa.Rmd"
-alias a="vim aaa.Rmd"
+alias a="nvim aaa.Rmd"
 alias l="tree -L 1"
 alias t=tmux
 alias clock='while true; do tput clear; date +"%H : %M : %S" | figlet ; sleep 1; done'
@@ -25,7 +25,7 @@ alias f="ranger"
 alias netdata="firefox http://127.0.0.1:19999/ &"
 alias gitpush="bash <path>/<to>/<my>/<gitpush>/<script>"
 alias incr="Rscript -e 'mpmisc::increment_dev_version()'"
-alias todo="vim ~/Documents/todo"
+alias todo="nvim ~/Documents/todo"
 alias sizes="du -sh * | sort -h"
 alias rg="rg --hidden --glob '!.git' -T js -T html -T css"
 alias nfiles="ls | wc -l"
@@ -63,7 +63,8 @@ alias screenshot="xwd -root -out screenshot.xwd && convert screenshot.xwd screen
 alias search="bash /<path>/<to>/searxng.bash"
 alias lstt="ls -latr | bash /<path>/<to>/tte.bash"
 cat_to_tte() {
-    cat "$1" | bash /<path>/<to>/tte.bash
+	cat "$1" | bash / <path >/ <to >/tte.bash
 }
 alias cattt='cat_to_tte'
 alias paru-query='paru -Ssq $1'
+alias vim='nvim'

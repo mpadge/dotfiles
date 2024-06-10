@@ -2,7 +2,7 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
-export EDITOR='vim'
+export EDITOR='nvim'
 
 # If not running interactively, don't do anything
 case $- in
@@ -206,7 +206,7 @@ function title () {
     echo -ne "\033]0;${1}\007"
 }
 
-export VIMRUNTIME=/usr/share/vim/vim91
+# export VIMRUNTIME=/usr/share/vim/vim91
 
 # for js V8; see http://blog.scaleprocess.net/building-v8-on-arch-linux/
 export PATH=/usr/local/lib/depot_tools:"$PATH"  
