@@ -66,3 +66,4 @@ cat_to_tte() {
     cat "$1" | bash /<path>/<to>/tte.bash
 }
 alias cattt='cat_to_tte'
+alias paru-query='paru -Ssq $1'
