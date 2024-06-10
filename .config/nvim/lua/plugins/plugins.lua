@@ -37,6 +37,9 @@ return {
                         -- opportunity to create mappings local to buffers.
                         vim.api.nvim_buf_set_keymap(0, "n", "<Space>", "<Plug>RDSendLine", {})
                         vim.api.nvim_buf_set_keymap(0, "v", "<Space>", "<Plug>RSendSelection", {})
+                        vim.o.foldmethod = "expr"
+                        vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+                        -- vim.o.foldenable = false
                     end,
                 },
                 min_editor_width = 72,
