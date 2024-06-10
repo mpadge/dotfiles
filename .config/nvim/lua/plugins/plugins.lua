@@ -1,6 +1,9 @@
 vim.g.mapleader = ";"
 vim.g.maplocalleader = ","
 
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
 local width = vim.api.nvim_win_get_width(0)
 local width_float = tonumber(vim.fn.str2float(tostring(width)))
 local half_width = math.floor(width_float / 2)
@@ -55,11 +58,27 @@ return {
         "hrsh7th/nvim-cmp",
         dependencies = {
             "hrsh7th/cmp-emoji",
+            "hrsh7th/cmp-path",
         },
         config = function()
             require("cmp").setup({ sources = { { name = "nvim_lua" } } })
             require("cmp").setup({ sources = { { name = "cmp_r" } } })
+            require("cmp").setup({ sources = { { name = "path" } } })
             require("cmp_r").setup({})
+            --- List all language servers with :help lspconfig-all
+            require("lspconfig").bashls.setup({})
+            require("lspconfig").r_language_server.setup({})
+            require("lspconfig").dockerls.setup({
+                settings = {
+                    docker = {
+                        languageserver = {
+                            formatter = {
+                                ignoreMultilineInstructions = false,
+                            },
+                        },
+                    },
+                },
+            })
         end,
         ---@param opts cmp.ConfigSchema
         opts = function(_, opts)
