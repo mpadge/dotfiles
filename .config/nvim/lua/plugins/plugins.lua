@@ -8,6 +8,21 @@ local width = vim.api.nvim_win_get_width(0)
 local width_float = tonumber(vim.fn.str2float(tostring(width)))
 local half_width = math.floor(width_float / 2)
 
+vim.api.nvim_create_autocmd("User", {
+    callback = function()
+        local ok, buf = pcall(vim.api.nvim_win_get_buf, vim.g.coc_last_float_win)
+        if ok then
+            vim.keymap.set("g", "w", function()
+                require("link-visitor").link_under_cursor()
+            end, { buffer = buf })
+            vim.keymap.set("g", "x", function()
+                require("link-visitor").link_near_cursor()
+            end, { buffer = buf })
+        end
+    end,
+    pattern = "CocOpenFloat",
+})
+
 return {
     {
         "R-nvim/R.nvim",
@@ -143,5 +158,25 @@ return {
                 winblend = 0,
             },
         },
+    },
+    {
+        "xiyaowong/link-visitor.nvim",
+        config = function()
+            require("link-visitor").setup({
+                open_cmd = nil,
+                --[[
+          1. cmd to open url
+          defaults:
+          win or wsl: cmd.exe /c start
+          mac: open
+          linux: xdg-open
+          2. a function to handle the link
+          the function signature: func(link: string)
+          --]]
+                silent = true, -- disable all prints, `false` by defaults skip_confirmation
+                skip_confirmation = true, -- Skip the confirmation step, default: false
+                border = "rounded", -- none, single, double, rounded, solid, shadow see `:h nvim_open_win()`
+            })
+        end,
     },
 }
