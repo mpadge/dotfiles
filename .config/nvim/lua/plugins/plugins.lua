@@ -51,7 +51,6 @@ return {
             })
         end,
     },
-    "R-nvim/cmp-r",
     {
         "hrsh7th/nvim-cmp",
         dependencies = {
@@ -100,6 +99,9 @@ return {
                 end, { "i", "s" }),
             })
         end,
+    },
+    {
+        "R-nvim/cmp-r",
     },
     -- change some telescope options and a keymap to browse plugin files
     {
