@@ -4,7 +4,6 @@ vim.g.maplocalleader = ","
 local width = vim.api.nvim_win_get_width(0)
 local width_float = tonumber(vim.fn.str2float(tostring(width)))
 local half_width = math.floor(width_float / 2)
--- os.execute("export R_rconsole_width=" .. tostring(half_width))
 
 return {
     {
@@ -23,6 +22,7 @@ return {
                     end,
                 },
                 min_editor_width = 72,
+                pdfviewer = "/usr/bin/okular",
                 rconsole_width = half_width,
                 disable_cmds = {
                     "RClearConsole",
