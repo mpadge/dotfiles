@@ -4,5 +4,8 @@
 vim.g.maplocalleader = ","
 vim.g.mapleader = ";"
 
+-- https://github.com/stevearc/conform.nvim/blob/master/doc/recipes.md#command-to-toggle-format-on-save
+vim.g.disable_autoformat = true
+
 vim.opt.relativenumber = false
 vim.opt.shiftwidth = 4
