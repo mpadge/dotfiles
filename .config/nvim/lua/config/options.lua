@@ -5,3 +5,4 @@ vim.g.maplocalleader = ","
 vim.g.mapleader = ";"
 
 vim.opt.relativenumber = false
+vim.opt.shiftwidth = 4
