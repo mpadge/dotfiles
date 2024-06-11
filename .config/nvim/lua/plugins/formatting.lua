@@ -1,5 +1,6 @@
 return {
     "stevearc/conform.nvim",
+    enabled = true,
     event = { "BufReadPre", "BufNewFile" },
     config = function()
         local conform = require("conform")
@@ -30,6 +31,7 @@ return {
                     prepend_args = { "-i", "4" },
                 },
             },
+            autoformat = false,
         })
 
         vim.keymap.set({ "n", "v" }, "<leader>mp", function()
