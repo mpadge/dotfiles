@@ -6,7 +6,8 @@ return {
             local g = vim.g
 
             g.ale_r_lintr_lint_package = 0
-            g.ale_r_lintr_options = "linters_with_defaults(indentation_linter(4))"
+            g.ale_r_lintr_options = "lintr::linters_with_defaults(function_left_parentheses_linter=NULL)"
+            g.ale_styler_options = "spaceout::spaceout_style"
 
             g.ale_ruby_rubocop_auto_correct_all = 1
 
