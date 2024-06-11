@@ -69,15 +69,19 @@ return {
         end,
     },
     {
+        "hrsh7th/cmp-path",
+        config = function()
+            require("cmp").setup({ sources = { { name = "path" } } })
+        end,
+    },
+    {
         "hrsh7th/nvim-cmp",
         dependencies = {
             "hrsh7th/cmp-emoji",
-            "hrsh7th/cmp-path",
         },
         config = function()
             require("cmp").setup({ sources = { { name = "nvim_lua" } } })
             require("cmp").setup({ sources = { { name = "cmp_r" } } })
-            require("cmp").setup({ sources = { { name = "path" } } })
             require("cmp_r").setup({})
             --- List all language servers with :help lspconfig-all
             require("lspconfig").bashls.setup({})
