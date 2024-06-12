@@ -8,205 +8,206 @@ local width_float = tonumber(vim.fn.str2float(tostring(width)))
 local half_width = math.floor(width_float / 2)
 
 return {
-  -- add gruvbox
-  { "ellisonleao/gruvbox.nvim" },
+    -- add gruvbox
+    { "ellisonleao/gruvbox.nvim" },
 
-  -- Configure LazyVim to load gruvbox
-  {
-    "LazyVim/LazyVim",
-    opts = {
-      -- colorscheme = "gruvbox",
-    },
-  },
-
-  -- add pyright to lspconfig
-  {
-    "neovim/nvim-lspconfig",
-    ---@class PluginLspOpts
-    opts = {
-      ---@type lspconfig.options
-      servers = {
-        ccls = {},
-        pyright = {},
-        r_language_server = {},
-      },
-    },
-  },
-
-  -- add more treesitter parsers
-  {
-    "nvim-treesitter/nvim-treesitter",
-    opts = {
-      ensure_installed = {
-        "bash",
-        "cpp",
-        "html",
-        "javascript",
-        "json",
-        "lua",
-        "markdown",
-        "markdown_inline",
-        "python",
-        "query",
-        "r",
-        "regex",
-        "rnoweb",
-        "tsx",
-        "typescript",
-        "vim",
-        "yaml",
-      },
-    },
-  },
-
-  -- since `vim.tbl_deep_extend`, can only merge tables and not lists, the code above
-  -- would overwrite `ensure_installed` with the new value.
-  -- If you'd rather extend the default config, use the code below instead:
-  {
-    "nvim-treesitter/nvim-treesitter",
-    opts = function(_, opts)
-      -- add tsx and treesitter
-      vim.list_extend(opts.ensure_installed, {
-        "tsx",
-        "typescript",
-      })
-    end,
-  },
-
-  -- the opts function can also be used to change the default opts:
-  {
-    "nvim-lualine/lualine.nvim",
-    event = "VeryLazy",
-    opts = function(_, opts)
-      table.insert(opts.sections.lualine_x, "😄")
-    end,
-  },
-
-  -- or you can return new options to override all the defaults
-  {
-    "nvim-lualine/lualine.nvim",
-    event = "VeryLazy",
-    opts = function()
-      return {
-        --[[add your custom lualine config here]]
-      }
-    end,
-  },
-
-  -- add any tools you want to have installed below
-  {
-    "williamboman/mason.nvim",
-    opts = {
-      ensure_installed = {
-        "stylua",
-        "shellcheck",
-        "shfmt",
-        "flake8",
-      },
-    },
-  },
-
-  -- Use <tab> for completion and snippets (supertab)
-  {
-    "hrsh7th/nvim-cmp",
-    dependencies = {
-      "hrsh7th/cmp-emoji",
-    },
-    ---@param opts cmp.ConfigSchema
-    opts = function(_, opts)
-      local has_words_before = function()
-        unpack = unpack or table.unpack
-        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-      end
-
-      local cmp = require("cmp")
-
-      opts.mapping = vim.tbl_extend("force", opts.mapping, {
-        ["<Tab>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_next_item()
-          elseif vim.snippet.active({ direction = 1 }) then
-            vim.schedule(function()
-              vim.snippet.jump(1)
-            end)
-          elseif has_words_before() then
-            cmp.complete()
-          else
-            fallback()
-          end
-        end, { "i", "s" }),
-        ["<S-Tab>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_prev_item()
-          elseif vim.snippet.active({ direction = -1 }) then
-            vim.schedule(function()
-              vim.snippet.jump(-1)
-            end)
-          else
-            fallback()
-          end
-        end, { "i", "s" }),
-      })
-    end,
-  },
-  {
-    "R-nvim/R.nvim",
-    config = function()
-      -- Create a table with the options to be passed to setup()
-      local opts = {
-        R_args = { "--quiet", "--no-save" },
-        hook = {
-          on_filetype = function()
-            -- This function will be called at the FileType event
-            -- of files supported by R.nvim. This is an
-            -- opportunity to create mappings local to buffers.
-            vim.api.nvim_buf_set_keymap(0, "n", "<Space>", "<Plug>RDSendLine", {})
-            vim.api.nvim_buf_set_keymap(0, "v", "<Space>", "<Plug>RSendSelection", {})
-            vim.o.foldmethod = "expr"
-            vim.o.foldexpr = "nvim_treesitter#foldexpr()"
-            -- vim.o.foldenable = false
-          end,
+    -- Configure LazyVim to load gruvbox
+    {
+        "LazyVim/LazyVim",
+        opts = {
+            -- colorscheme = "gruvbox",
         },
-        min_editor_width = 72,
-        pdfviewer = "/usr/bin/okular",
-        rconsole_width = half_width,
-        disable_cmds = {
-          "RCustomStart",
-          "RSPlot",
-          "RSaveClose",
-        },
-      }
-      -- Check if the environment variable "R_AUTO_START" exists.
-      -- If using fish shell, you could put in your config.fish:
-      -- alias r "R_AUTO_START=true nvim"
-      if vim.env.R_AUTO_START == "true" then
-        opts.auto_start = 1
-        opts.objbr_auto_start = true
-      end
-      require("r").setup(opts)
-    end,
-    lazy = false,
-  },
-  {
-    "R-nvim/cmp-r",
-    require("cmp").setup({
-      sources = {
-        { name = "cmp_r" },
-      },
-    }),
-  },
-  -- override nvim-cmp and add extra cmps
-  {
-    "hrsh7th/nvim-cmp",
-    dependencies = {
-      "hrsh7th/cmp-emoji",
-      "R-nvim/cmp-r",
     },
-    ---@param opts cmp.ConfigSchema
-    opts = function(_, opts)
-      table.insert(opts.sources, { name = "emoji" })
-      table.insert(opts.sources, { name = "cmp_r" })
-    end,
-  },
+
+    -- add pyright to lspconfig
+    {
+        "neovim/nvim-lspconfig",
+        ---@class PluginLspOpts
+        opts = {
+            ---@type lspconfig.options
+            servers = {
+                ccls = {},
+                pyright = {},
+                r_language_server = {},
+            },
+        },
+    },
+
+    -- add more treesitter parsers
+    {
+        "nvim-treesitter/nvim-treesitter",
+        opts = {
+            ensure_installed = {
+                "bash",
+                "cpp",
+                "html",
+                "javascript",
+                "json",
+                "lua",
+                "markdown",
+                "markdown_inline",
+                "python",
+                "query",
+                "r",
+                "regex",
+                "rnoweb",
+                "tsx",
+                "typescript",
+                "vim",
+                "yaml",
+            },
+        },
+    },
+
+    -- since `vim.tbl_deep_extend`, can only merge tables and not lists, the code above
+    -- would overwrite `ensure_installed` with the new value.
+    -- If you'd rather extend the default config, use the code below instead:
+    {
+        "nvim-treesitter/nvim-treesitter",
+        opts = function(_, opts)
+            -- add tsx and treesitter
+            vim.list_extend(opts.ensure_installed, {
+                "tsx",
+                "typescript",
+            })
+        end,
+    },
+
+    -- the opts function can also be used to change the default opts:
+    {
+        "nvim-lualine/lualine.nvim",
+        event = "VeryLazy",
+        opts = function(_, opts)
+            table.insert(opts.sections.lualine_x, "😄")
+        end,
+    },
+
+    -- or you can return new options to override all the defaults
+    {
+        "nvim-lualine/lualine.nvim",
+        event = "VeryLazy",
+        opts = function()
+            return {
+                --[[add your custom lualine config here]]
+            }
+        end,
+    },
+
+    -- add any tools you want to have installed below
+    {
+        "williamboman/mason.nvim",
+        opts = {
+            ensure_installed = {
+                "stylua",
+                "shellcheck",
+                "shfmt",
+                "flake8",
+            },
+        },
+    },
+
+    -- Use <tab> for completion and snippets (supertab)
+    {
+        "hrsh7th/nvim-cmp",
+        dependencies = {
+            "hrsh7th/cmp-emoji",
+        },
+        ---@param opts cmp.ConfigSchema
+        opts = function(_, opts)
+            local has_words_before = function()
+                unpack = unpack or table.unpack
+                local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+                return col ~= 0 and
+                    vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+            end
+
+            local cmp = require("cmp")
+
+            opts.mapping = vim.tbl_extend("force", opts.mapping, {
+                ["<Tab>"] = cmp.mapping(function(fallback)
+                    if cmp.visible() then
+                        cmp.select_next_item()
+                    elseif vim.snippet.active({ direction = 1 }) then
+                        vim.schedule(function()
+                            vim.snippet.jump(1)
+                        end)
+                    elseif has_words_before() then
+                        cmp.complete()
+                    else
+                        fallback()
+                    end
+                end, { "i", "s" }),
+                ["<S-Tab>"] = cmp.mapping(function(fallback)
+                    if cmp.visible() then
+                        cmp.select_prev_item()
+                    elseif vim.snippet.active({ direction = -1 }) then
+                        vim.schedule(function()
+                            vim.snippet.jump(-1)
+                        end)
+                    else
+                        fallback()
+                    end
+                end, { "i", "s" }),
+            })
+        end,
+    },
+    {
+        "R-nvim/R.nvim",
+        config = function()
+            -- Create a table with the options to be passed to setup()
+            local opts = {
+                R_args = { "--quiet", "--no-save" },
+                hook = {
+                    on_filetype = function()
+                        -- This function will be called at the FileType event
+                        -- of files supported by R.nvim. This is an
+                        -- opportunity to create mappings local to buffers.
+                        vim.api.nvim_buf_set_keymap(0, "n", "<Space>", "<Plug>RDSendLine", {})
+                        vim.api.nvim_buf_set_keymap(0, "v", "<Space>", "<Plug>RSendSelection", {})
+                        vim.o.foldmethod = "expr"
+                        vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+                        -- vim.o.foldenable = false
+                    end,
+                },
+                min_editor_width = 72,
+                pdfviewer = "/usr/bin/okular",
+                rconsole_width = half_width,
+                disable_cmds = {
+                    "RCustomStart",
+                    "RSPlot",
+                    "RSaveClose",
+                },
+            }
+            -- Check if the environment variable "R_AUTO_START" exists.
+            -- If using fish shell, you could put in your config.fish:
+            -- alias r "R_AUTO_START=true nvim"
+            if vim.env.R_AUTO_START == "true" then
+                opts.auto_start = 1
+                opts.objbr_auto_start = true
+            end
+            require("r").setup(opts)
+        end,
+        lazy = false,
+    },
+    {
+        "R-nvim/cmp-r",
+        require("cmp").setup({
+            sources = {
+                { name = "cmp_r" },
+            },
+        }),
+    },
+    -- override nvim-cmp and add extra cmps
+    {
+        "hrsh7th/nvim-cmp",
+        dependencies = {
+            "hrsh7th/cmp-emoji",
+            "R-nvim/cmp-r",
+        },
+        ---@param opts cmp.ConfigSchema
+        opts = function(_, opts)
+            table.insert(opts.sources, { name = "emoji" })
+            table.insert(opts.sources, { name = "cmp_r" })
+        end,
+    },
 }
