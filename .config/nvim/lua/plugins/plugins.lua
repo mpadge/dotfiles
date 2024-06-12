@@ -130,6 +130,12 @@ return {
 
       local cmp = require("cmp")
 
+      cmp.setup({
+        sources = {
+          { name = "cmp_r" },
+        },
+      })
+
       opts.mapping = vim.tbl_extend("force", opts.mapping, {
         ["<Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
