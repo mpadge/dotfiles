@@ -19,16 +19,6 @@ return {
     },
   },
 
-  -- override nvim-cmp and add cmp-emoji
-  {
-    "hrsh7th/nvim-cmp",
-    dependencies = { "hrsh7th/cmp-emoji" },
-    ---@param opts cmp.ConfigSchema
-    opts = function(_, opts)
-      table.insert(opts.sources, { name = "emoji" })
-    end,
-  },
-
   -- add pyright to lspconfig
   {
     "neovim/nvim-lspconfig",
@@ -36,8 +26,9 @@ return {
     opts = {
       ---@type lspconfig.options
       servers = {
-        -- pyright will be automatically installed with mason and loaded with lspconfig
+        ccls = {},
         pyright = {},
+        r_language_server = {},
       },
     },
   },
@@ -48,6 +39,7 @@ return {
     opts = {
       ensure_installed = {
         "bash",
+        "cpp",
         "html",
         "javascript",
         "json",
@@ -130,12 +122,6 @@ return {
 
       local cmp = require("cmp")
 
-      cmp.setup({
-        sources = {
-          { name = "cmp_r" },
-        },
-      })
-
       opts.mapping = vim.tbl_extend("force", opts.mapping, {
         ["<Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
@@ -201,5 +187,26 @@ return {
       require("r").setup(opts)
     end,
     lazy = false,
+  },
+  {
+    "R-nvim/cmp-r",
+    require("cmp").setup({
+      sources = {
+        { name = "cmp_r" },
+      },
+    }),
+  },
+  -- override nvim-cmp and add extra cmps
+  {
+    "hrsh7th/nvim-cmp",
+    dependencies = {
+      "hrsh7th/cmp-emoji",
+      "R-nvim/cmp-r",
+    },
+    ---@param opts cmp.ConfigSchema
+    opts = function(_, opts)
+      table.insert(opts.sources, { name = "emoji" })
+      table.insert(opts.sources, { name = "cmp_r" })
+    end,
   },
 }
