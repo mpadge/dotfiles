@@ -5,7 +5,10 @@ vim.g.maplocalleader = ","
 vim.g.mapleader = ";"
 
 -- https://github.com/stevearc/conform.nvim/blob/master/doc/recipes.md#command-to-toggle-format-on-save
-vim.g.disable_autoformat = true
+-- Says "disable_automate = true", but
+-- https://github.com/LazyVim/LazyVim/blob/8346fa7ddc9390312408be571c6443c0b57b9f21/lua/lazyvim/config/options.lua#L6
+-- has option `vim.g.automate = true`, and that works:
+vim.g.autoformat = false
 
 vim.opt.relativenumber = false
 vim.opt.shiftwidth = 4
