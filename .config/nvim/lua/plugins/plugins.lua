@@ -8,15 +8,27 @@ local width_float = tonumber(vim.fn.str2float(tostring(width)))
 local half_width = math.floor(width_float / 2)
 
 return {
-    -- add gruvbox
-    { "ellisonleao/gruvbox.nvim" },
+    -- ----- colour schemes with optional config::
+    { "ellisonleao/gruvbox.nvim", name = "gruvbox" },
+    { "catppuccin/nvim",
+        name = "catppuccin",
+        priority = 1000,
+    },
 
-    -- Configure LazyVim to load gruvbox
+    -- Configure LazyVim to load colour scheme:
     {
         "LazyVim/LazyVim",
-        opts = {
-            -- colorscheme = "gruvbox",
-        },
+        -- opts = {
+        --     colorscheme = "catppuccin-latte",
+        -- },
+        opts = function()
+            local colour_scheme_value = os.getenv("NVIM_COLOUR_SCHEME")
+            local opts = {}
+            if colour_scheme_value ~= "none" then
+                opts.colorscheme = colour_scheme_value
+            end
+            return opts
+        end,
     },
 
     -- add pyright to lspconfig
