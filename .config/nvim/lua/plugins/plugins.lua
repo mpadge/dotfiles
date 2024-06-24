@@ -189,6 +189,7 @@ return {
                     "RSPlot",
                     "RSaveClose",
                 },
+                external_term = "tmux split-window -vh",
             }
             require("r").setup(opts)
         end,
