@@ -8,7 +8,8 @@ COMP=clang
 #COMPXX=g++
 #COMP=gcc
 
-WFLAGS=-Wall -pedantic -Wconversion -Wstrict-prototypes -Wno-ignored-optimization-argument
+# WFLAGS=-Wall -pedantic -Wconversion -Wno-ignored-optimization-argument
+WFLAGS=-Wall -pedantic
 
 EXCL_A=/usr/lib/R/library/Rcpp/include
 EXCL_B=/usr/lib/R/library/RcppArmadillo/include
