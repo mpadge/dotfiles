@@ -3,6 +3,17 @@
 -- Add any additional options here
 vim.g.maplocalleader = ","
 vim.g.mapleader = ";"
+vim.g.linebreak = 80
+vim.g.textwidth = 80
+
+-- https://vi.stackexchange.com/a/39800
+-- Use internal formatting for bindings like gq.
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(args)
+    vim.bo[args.buf].formatexpr = nil
+  end,
+})
+-- ... but that doesn't work, so just need to manually `:set formatexpr=` until better solution found.
 
 -- https://github.com/stevearc/conform.nvim/blob/master/doc/recipes.md#command-to-toggle-format-on-save
 -- Says "disable_automate = true", but
