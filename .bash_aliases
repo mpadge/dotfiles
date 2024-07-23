@@ -9,6 +9,7 @@ alias t=tmux
 alias clock='while true; do tput clear; date +"%H : %M : %S" | figlet ; sleep 1; done'
 alias scan='nmcli dev wifi list'
 alias l="tree -L 1"
+alias la="eza -1 -l -a --total-size --no-permissions --no-user"
 alias gl="git ls-tree -r master"
 alias battery="acpi -V | grep 'Battery'"
 alias update="sudo pacman -Syu; paru -Syu"
