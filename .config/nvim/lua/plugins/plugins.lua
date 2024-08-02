@@ -31,7 +31,12 @@ return {
         end,
     },
 
-    -- add pyright to lspconfig
+    -- language server client:
+    {
+        "autozimu/LanguageClient-neovim",
+        branch = "next",
+    },
+    -- add pyright and r_language_server to lspconfig
     {
         "neovim/nvim-lspconfig",
         ---@class PluginLspOpts
@@ -248,5 +253,5 @@ return {
         cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
         ft = { "markdown" },
         build = function() vim.fn["mkdp#util#install"]() end,
-    }
+    },
 }
