@@ -31,11 +31,6 @@ return {
         end,
     },
 
-    -- language server client:
-    {
-        "autozimu/LanguageClient-neovim",
-        branch = "next",
-    },
     -- add pyright and r_language_server to lspconfig
     {
         "neovim/nvim-lspconfig",
@@ -45,7 +40,9 @@ return {
             servers = {
                 ccls = {},
                 pyright = {},
-                r_language_server = {},
+                r_language_server = {
+                    cmd = {"R", "--slave", "-e", "languageserver::run()"},
+                },
             },
         },
     },
