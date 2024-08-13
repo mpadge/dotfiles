@@ -1,7 +1,7 @@
 #local ({
         r <- getOption('repos')
         r['CRAN'] <- 'https://cloud.r-project.org'
-        options(repos=r)
+        options(repos = r)
         rm (r)
 #        })
 
@@ -15,21 +15,20 @@
 #options (stringsAsFactors=FALSE)
 #options (max.print=100)
 options (width = 80)
-options (scipen=10)
-options (editor='vim')
-options (browser='firefox')
+options (scipen = 10)
+options (editor = 'vim')
+options (browser = 'firefox')
 #options (prompt='R> ', digits=4)
 #
 options(languageserver.formatting_style = function(options) {
     spaceout::spaceout_style ()
 })
 
-utils::rc.settings(ipck=TRUE) # tab-complete package names
+utils::rc.settings(ipck = TRUE) # tab-complete package names
 
 .env <- new.env()
-.env$setpar <- function (mar=c(3, 3, 2, 1), mgp=c(1.7, 0.3, 0))
-{
-    par (mar=mar, mgp=mgp)
+.env$setpar <- function (mar = c(3, 3, 2, 1), mgp = c(1.7, 0.3, 0)) {
+    par (mar = mar, mgp = mgp)
 }
 
 .env$myfoghorn <- function (email = "mark.padgham@email.com") {
