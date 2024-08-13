@@ -31,11 +31,6 @@ return {
         end,
     },
 
-    -- Requires paru -Sy languageclient-neovim --
-    {
-        "autozimu/LanguageClient-neovim",
-            branch = "next",
-    },
     -- add pyright and r_language_server to lspconfig
     {
         "neovim/nvim-lspconfig",
