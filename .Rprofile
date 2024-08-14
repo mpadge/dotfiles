@@ -19,10 +19,17 @@ options (scipen = 10)
 options (editor = 'vim')
 options (browser = 'firefox')
 #options (prompt='R> ', digits=4)
-#
+
+# https://github.com/REditorSupport/languageserver/issues/503
+# cat("<project> [start]", Sys.getpid(), paste0(commandArgs(), collapse = " "), file = "~/rprofile.log", append = TRUE)
+# options(languageserver.debug = function(options) {
+#     TRUE
+# })
 options(languageserver.formatting_style = function(options) {
     spaceout::spaceout_style ()
 })
+options(languageserver.diagnostics = FALSE)
+# cat("[end]", "\n", file = "~/rprofile.log", append = TRUE)
 
 utils::rc.settings(ipck = TRUE) # tab-complete package names
 
