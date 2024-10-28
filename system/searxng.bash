@@ -4,15 +4,15 @@ if ! pgrep -f "/usr/local/searxng/dockerfiles/docker-entrypoint.sh" > /dev/null;
 
     if ! systemctl is-active docker.service > /dev/null; then
         echo "Docker service is not running. Starting it now..."
-        sudo systemctl start docker.service
+        systemctl start docker.service
         sleep 2
     fi
 
     if ! sudo docker ps -a | grep "searxng" > /dev/null; then
         echo "Searxng is not running. Starting it now..."
-        sudo docker compose -f /usr/local/searxng-docker/docker-compose.yaml up -d
+        docker compose -f /usr/local/searxng-docker/docker-compose.yaml up -d
         sleep 2
     fi
 fi
 
-xdg-open http://127.0.0.1:8080 &
+firefox http://127.0.0.1:8080 &
