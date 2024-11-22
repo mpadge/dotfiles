@@ -327,3 +327,37 @@ echo -e "$BLUE     ooooo          $WHITE<oooooo>      $LIGHTBLUE\e[1m R Packages
 bash /<path>/<to>/<system-scripts>/r-version.bash
 
 export PATH="$PATH:$HOME/miniconda/bin"
+
+# ---------- ONEFETCH START ----------
+#
+# https://github.com/o2sh/onefetch/wiki/getting-started
+# With modifications to add extra separator line only if .bashrc is called at
+# start of new terminal or pane.
+
+export BASHRC_RUN="y"
+
+# git repository greeter
+last_repository=
+check_directory_for_new_repository() {
+    current_repository=$(git rev-parse --show-toplevel 2> /dev/null)
+
+    if [ "$current_repository" ] && \
+        [ "$current_repository" != "$last_repository" ]; then
+            if [ -n "$BASHRC_RUN" ]; then
+                echo -e ""
+                echo -e "$GREEN ✩░░░░▒▒▒▒▓▓▓▓▆▆▆▆▅▅▅▅▃▃▃▃▂▂▂▂▁▁▁▁▁▁▁▁▂▂▂▂▃▃▃▃▅▅▅▅▆▆▆▆▓▓▓▓▒▒▒▒░░░░✩"
+                echo -e ""
+            fi
+            onefetch
+    fi
+    last_repository=$current_repository
+}
+cd() {
+    builtin cd "$@"
+    check_directory_for_new_repository
+}
+
+# optional, greet also when opening shell directly in repository directory
+# adds time to startup
+check_directory_for_new_repository
+# ---------- ONEFETCH END ----------
