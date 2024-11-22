@@ -324,18 +324,24 @@ echo -e "$BLUE       ooooo  $WHITE<oooooooooo>        $LIGHTGREEN$HLINE$NC"
 echo -e "$BLUE      ooooo      $WHITE<oooooooo>       $LIGHTBLUE\e[1m   Packages: $NC $NPKGS"
 echo -e "$BLUE     ooooo          $WHITE<oooooo>      $LIGHTBLUE\e[1m R Packages: $NC $NRPKGS ($DSRPKGS)"
 
+# Conditionally run separator only if in git repo, where one fetch will be run
+# below:
+git_repository=$(git rev-parse --show-toplevel 2> /dev/null)
+if [ "$git_repository" ]; then
+    echo -e ""
+    echo -e "$GREEN ✩░░░░▒▒▒▒▓▓▓▓▆▆▆▆▅▅▅▅▃▃▃▃▂▂▂▂▁▁▁▁▁▁▁▁▂▂▂▂▃▃▃▃▅▅▅▅▆▆▆▆▓▓▓▓▒▒▒▒░░░░✩"
+    echo -e ""
+fi
+
 bash /<path>/<to>/<system-scripts>/r-version.bash
 
 export PATH="$PATH:$HOME/miniconda/bin"
 
+
 # ---------- ONEFETCH START ----------
 #
 # https://github.com/o2sh/onefetch/wiki/getting-started
-# With modifications to add extra separator line only if .bashrc is called at
-# start of new terminal or pane.
-
-export BASHRC_RUN="y"
-
+#
 # git repository greeter
 last_repository=
 check_directory_for_new_repository() {
@@ -343,11 +349,6 @@ check_directory_for_new_repository() {
 
     if [ "$current_repository" ] && \
         [ "$current_repository" != "$last_repository" ]; then
-            if [ -n "$BASHRC_RUN" ]; then
-                echo -e ""
-                echo -e "$GREEN ✩░░░░▒▒▒▒▓▓▓▓▆▆▆▆▅▅▅▅▃▃▃▃▂▂▂▂▁▁▁▁▁▁▁▁▂▂▂▂▃▃▃▃▅▅▅▅▆▆▆▆▓▓▓▓▒▒▒▒░░░░✩"
-                echo -e ""
-            fi
             onefetch
     fi
     last_repository=$current_repository
