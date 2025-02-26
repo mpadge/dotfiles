@@ -1,10 +1,10 @@
 [user]
-	name = mpadge
-	email = mark.padgham@email.com
+    name = mpadge
+    email = mark.padgham@email.com
 [core]
-	autocrlf = input
-	safecrlf = true
-	editor = nvim
+    autocrlf = input
+    safecrlf = true
+    editor = nvim
 [alias]
     co = checkout
     ci = commit
@@ -14,12 +14,30 @@
     hist = log --graph --date=short --pretty=format:'%Cred%h%Creset%x09%ad - %Cgreen%d%Cblue%s%Creset'
     type = cat-file -t
     dump = cat-file -p
-
+[pull]
+    rebase = true
 [push]
-	default = simple
+    default = simple
 #[http]
 #	version = HTTP/1.1
 [credential]
-	helper = cache
+    helper = cache
 [init]
-	defaultBranch = main
+    defaultBranch = main
+[safe]
+    directory = /usr/local/searxng-docker
+[diff]
+    algorithm = histogram
+    colorMoved = plain
+    mnemonicPrefix = true
+    renames = true
+[fetch]
+    prune = true
+    pruneTags = true
+    all = true
+[rebase]
+    autoSquash = true
+    autoStash = true
+    updateRefs = true
+[help]
+    autocorrect = prompt
