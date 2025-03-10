@@ -51,25 +51,25 @@ REMOTE=""
 
 # repeat push for other remotes
 REMOTE=$(git remote -v | grep "originbb" | head -n 1) # bitbucket
-if [ -n "$REMOTE" ]; then # -n -> is non-zero string
+if [[ -n "$REMOTE" && "$BRANCH" == "main" ]]; then # -n -> is non-zero string
     echo ""
     echo -n "--------Pushing to bitbucket "
     git push originbb $BRANCH
 fi
 REMOTE=$(git remote -v | grep "origingl" | head -n 1) # gitlab
-if [ -n "$REMOTE" ]; then # -n -> is non-zero string
+if [[ -n "$REMOTE" && "$BRANCH" == "main" ]]; then
     echo ""
     echo -n "--------Pushing to gitlab "
     git push origingl $BRANCH
 fi
 REMOTE=$(git remote -v | grep "originsh" | head -n 1) # sourcehut
-if [ -n "$REMOTE" ]; then # -n -> is non-zero string
+if [[ -n "$REMOTE" && "$BRANCH" == "main" ]]; then
     echo ""
     echo -n "--------Pushing to sourcehut "
     git push originsh $BRANCH
 fi
 REMOTE=$(git remote -v | grep "origincb" | head -n 1) # codeberg
-if [ -n "$REMOTE" ]; then # -n -> is non-zero string
+if [[ -n "$REMOTE" && "$BRANCH" == "main" ]]; then
     echo ""
     echo -n "--------Pushing to codeberg "
     git push origincb $BRANCH
