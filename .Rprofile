@@ -61,16 +61,31 @@ attach(.env)
 .First <- function(){
     if(interactive()){
 
+        scheme_is_dark <- function () {
+            brc <- readLines ("~/.bashrc")
+            cs <- grep ("NVIM_COLOUR_SCHEME", brc, value = TRUE)
+            grepl ("none", cs [1])
+        }
+
         if ('colorout' %in% rownames (utils::installed.packages ()))
         {
             require (colorout, quietly = TRUE)
-            # default normal green too faint for light bg
             #colorout::show256Colors() # to see colours
-            #colorout::setOutputColors (normal = 0, string = 208, stderror = 21,
-            #                           verbose = FALSE)
-            # and this for dark bg:
-            colorout::setOutputColors (normal = 244, string = 208, stderror = 21,
-                verbose = FALSE)
+            if (scheme_is_dark ()) {
+                colorout::setOutputColors (
+                    normal = 244,
+                    string = 208,
+                    stderror = 39,
+                    verbose = FALSE
+                )
+            } else {
+                colorout::setOutputColors (
+                    normal = 0,
+                    string = 208,
+                    stderror = 39,
+                    verbose = FALSE
+                )
+            }
         }
 
         rv <- R.Version ()$version.string
@@ -99,13 +114,7 @@ attach(.env)
         # -------------------- START R SYMBOL -------------------
         #
         # This is centred around the system messages which needs to previous
-        # code to determine `nc`. Starts with a function to get current colour
-        # scheme (light or dark):
-        scheme_is_dark <- function () {
-            brc <- readLines ("~/.bashrc")
-            cs <- grep ("NVIM_COLOUR_SCHEME", brc, value = TRUE)
-            grepl ("none", cs [1])
-        }
+        # code to determine `nc`.
         BG <- ifelse (scheme_is_dark (), "\033[0;97m", "\033[0;90m" )
         NC <- '\033[0m'
         BLUE <- '\033[1;94m'
