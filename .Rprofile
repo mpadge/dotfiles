@@ -61,14 +61,6 @@ attach(.env)
 .First <- function(){
     if(interactive()){
 
-        # see :h nvimcom-not-loaded
-        #if (Sys.getenv ("NVIMR_TMPDIR") == "")
-        #        options (defaultPackages = c ("utils", "grDevices", "graphics",
-        #            "stats", "methods"))
-        #else
-        #        options (defaultPackages = c ("utils", "grDevices", "graphics",
-        #            "stats", "methods", "nvimcom"))
-
         if ('colorout' %in% rownames (utils::installed.packages ()))
         {
             require (colorout, quietly = TRUE)
@@ -79,7 +71,6 @@ attach(.env)
             # and this for dark bg:
             colorout::setOutputColors (normal = 244, string = 208, stderror = 21,
                                        verbose = FALSE)
-            #colorout::setOutputColors (verbose = FALSE)
         }
 
         rv <- R.Version ()$version.string
@@ -104,6 +95,41 @@ attach(.env)
         gap <- 2 # number of character before and after
         nci <- sapply (lns, nchar, USE.NAMES=FALSE)
         gaplen <- floor (nc + 2 * gap - nci) / 2
+
+        # -------------------- START R SYMBOL -------------------
+        #
+        # This is centred around the system messages which needs to previous
+        # code to determine `nc`. Starts with a function to get current colour
+        # scheme (light or dark):
+        scheme_is_dark <- function () {
+            brc <- readLines ("~/.bashrc")
+            cs <- grep ("NVIM_COLOUR_SCHEME", brc, value = TRUE)
+            grepl ("none", cs [1])
+        }
+        BG <- ifelse (scheme_is_dark (), "\033[0;37m", "\033[0;30m" )
+        NC <- '\033[0m'
+        BLUE <- '\033[0;34m'
+
+        msg1 <-  "             .,,,,,,,,,,,,,              " # copy of 1st line below
+        nc_msg <- nchar (msg1) + 2 * gap
+        indent <- (nc + gap + 2) - nc_msg
+        indent <- paste0 (rep (" ", indent), collapse = "")
+
+        message (BG, indent, "             .,,,,,,,,,,,,,              ", NC)
+        message (BG, indent, "       ,,,,,,,,,,,,,,,,,********         ", NC)
+        message (BG, indent, "    ,,,,,,,,,,,,,,,,,**************      ", NC)
+        message (BG, indent, "  ,,,,,,,,,,,,                  *****    ", NC)
+        message (BG, indent, " ,,,,,,,,,      ", BLUE, "RRRRRRRRRRRRRRRR", BG, "   ***   ", NC)
+        message (BG, indent, ",,,,,,,,,       ", BLUE, "RRRRRRRRRRRRRRRRRRR", BG, " ***  ", NC)
+        message (BG, indent, ",,,,,,,,        ", BLUE, "RRRRRRRRRRRRRRRRRRRR", BG, " //  ", NC)
+        message (BG, indent, ",,,,,,*         ", BLUE, "RRRRRRR      RRRRRRR", BG, " //  ", NC)
+        message (BG, indent, ",,,*****        ", BLUE, "RRRRRRR     RRRRRRR", BG, "  //  ", NC)
+        message (BG, indent, " ********       ", BLUE, "RRRRRRRRRRRRRRRRRR", BG, "  //   ", NC)
+        message (BG, indent, "   *********    ", BLUE, "RRRRRRRRRRRRRR", BG, "    //     ", NC)
+        message (BG, indent, "      **********", BLUE, "RRRRRRR   RRRRRRR", BG, "        ", NC)
+        message (BG, indent, "         *******", BLUE, "RRRRRRR    RRRRRRR", BG, "       ", NC)
+        message (BG, indent, "                ", BLUE, "RRRRRRR     RRRRRRRR", BG, "     ", NC)
+        # -------------------- END R SYMBOL -------------------
 
         message ("\n")
 
