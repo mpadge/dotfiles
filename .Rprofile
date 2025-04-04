@@ -106,9 +106,9 @@ attach(.env)
             cs <- grep ("NVIM_COLOUR_SCHEME", brc, value = TRUE)
             grepl ("none", cs [1])
         }
-        BG <- ifelse (scheme_is_dark (), "\033[0;37m", "\033[0;30m" )
+        BG <- ifelse (scheme_is_dark (), "\033[0;97m", "\033[0;90m" )
         NC <- '\033[0m'
-        BLUE <- '\033[0;34m'
+        BLUE <- '\033[1;94m'
 
         msg1 <-  "             .,,,,,,,,,,,,,              " # copy of 1st line below
         nc_msg <- nchar (msg1) + 2 * gap
