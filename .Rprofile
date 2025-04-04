@@ -1,8 +1,8 @@
 #local ({
-        r <- getOption('repos')
-        r['CRAN'] <- 'https://cloud.r-project.org'
-        options(repos = r)
-        rm (r)
+r <- getOption('repos')
+r['CRAN'] <- 'https://cloud.r-project.org'
+options(repos = r)
+rm (r)
 #        })
 
 # http://stackoverflow.com/questions/24387660/how-to-change-libpaths-permanently-in-r
@@ -11,7 +11,7 @@
 #.libPaths(c ('/usr/local/lib/R/site-library', .libPaths ()))
 .libPaths(c ('/usr/lib/R/library', .libPaths ()))
 .libPaths(c ('~/R/x86_64-pc-linux-gnu-library/4.4', .libPaths ()))
- 
+
 #options (stringsAsFactors=FALSE)
 #options (max.print=100)
 options (width = 80)
@@ -48,8 +48,8 @@ utils::rc.settings(ipck = TRUE) # tab-complete package names
                 xi <- foghorn::cran_details (pkg = i)
                 for (j in seq (nrow (xi))) {
                     print (cli::boxx (paste0 (xi$result [j],
-                                              " (N = ", xi$n_flavors [j], ")"),
-                                      padding = c (0, 5, 0, 5)))
+                        " (N = ", xi$n_flavors [j], ")"),
+                        padding = c (0, 5, 0, 5)))
                     message (xi$message [j])
                 }
             }
@@ -70,7 +70,7 @@ attach(.env)
             #                           verbose = FALSE)
             # and this for dark bg:
             colorout::setOutputColors (normal = 244, string = 208, stderror = 21,
-                                       verbose = FALSE)
+                verbose = FALSE)
         }
 
         rv <- R.Version ()$version.string
@@ -86,11 +86,11 @@ attach(.env)
         lns [[3]] <- paste0 ('machine = ', rpl, ': ', rsys ['nodename'])
         lns [[4]] <- paste0 ('wd: ', getwd ())
         lns <- sapply (lns, function (i) 
-                       {
-                           if ((nchar (i) %% 2) != 0)
-                               i <- paste0 (i, ' ')
-                           return (i)
-                       })
+            {
+                if ((nchar (i) %% 2) != 0)
+                i <- paste0 (i, ' ')
+                return (i)
+            })
         nc <- max (sapply (lns, nchar))
         gap <- 2 # number of character before and after
         nci <- sapply (lns, nchar, USE.NAMES=FALSE)
@@ -163,7 +163,7 @@ attach(.env)
                 #chk_date <- utils::read.table (chk_file, as.is=TRUE) [1, 1]
                 chk_date <- readLines (chk_file) [1]
                 if (chk_date == today)
-                    do_check = FALSE
+                do_check = FALSE
             }
             write (today, file = chk_file)
             if (do_check)
@@ -175,12 +175,12 @@ attach(.env)
                     cli::cli_ol(items = rownames (old))
                     message ("\n")
                 } else 
-                    message ('All packages up to date\n')
+                message ('All packages up to date\n')
 
                 cli::cli_h2 ("foghorn results")
                 x <- foghorn::summary_cran_results (email = "mark.padgham@email.com")
                 if (sum (x [, c ("error", "fail", "warn", "note")]) > 0)
-                    cli::cli_text ("Run '.env$myfoghorn()' for details")
+                cli::cli_text ("Run '.env$myfoghorn()' for details")
             }
         } else {
             message ('nope, no internet\n')
@@ -194,7 +194,7 @@ attach(.env)
 vw <- FALSE
 if (vw) {
     suppressMessages (
-                      th <- ggplot2::theme_minimal ()
+        th <- ggplot2::theme_minimal ()
     )
     nr <- vapoRwave::new_retro ()
 
