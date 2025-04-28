@@ -154,9 +154,6 @@ test -r $d && eval "$(dircolors $d)"
 # thefuck
 eval "$(thefuck --alias)"
 
-# added by travis gem
-[ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
-
 # from @karpfen:
 function run {
     if [ -z "$1" ]; then
@@ -337,11 +334,12 @@ bash /<path>/<to>/<system-scripts>/r-version.bash
 
 export PATH="$PATH:$HOME/miniconda/bin"
 
-
 # ---------- ONEFETCH START ----------
 #
 # https://github.com/o2sh/onefetch/wiki/getting-started
-#
+# With modifications to add extra separator line only if .bashrc is called at
+# start of new terminal or pane.
+
 # git repository greeter
 last_repository=
 check_directory_for_new_repository() {
