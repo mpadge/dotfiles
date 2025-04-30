@@ -30,19 +30,6 @@ return {
             return opts
         end,
     },
-    {
-        "romgrk/barbar.nvim",
-        dependencies = {
-            "lewis6991/gitsigns.nvim",
-            "nvim-tree/nvim-web-devicons",
-        },
-        init = function() vim.g.barbar_auto_setup = false end,
-        opts = {
-            -- animation = true,
-            -- insert_at_start = true,
-            hide = {inactive = true, current = false, visible = true},
-        }
-    },
 
     -- add pyright and r_language_server to lspconfig
     {
@@ -191,6 +178,7 @@ return {
                         -- opportunity to create mappings local to buffers.
                         vim.api.nvim_buf_set_keymap(0, "n", "<Space>", "<Plug>RDSendLine", {})
                         vim.api.nvim_buf_set_keymap(0, "v", "<Space>", "<Plug>RSendSelection", {})
+                        vim.api.nvim_buf_set_keymap(0, "i", "`", "<Plug>RmdInsertChunk", {})
                         vim.o.foldmethod = "expr"
                         vim.o.foldexpr = "nvim_treesitter#foldexpr()"
                         -- vim.o.foldenable = false
