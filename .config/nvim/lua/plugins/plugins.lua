@@ -252,4 +252,21 @@ return {
         ft = { "markdown" },
         build = function() vim.fn["mkdp#util#install"]() end,
     },
+    {
+        "quarto-dev/quarto-nvim",
+        dependencies = {
+            "jmbuhr/otter.nvim",
+            "nvim-treesitter/nvim-treesitter",
+        },
+        opts = {
+            hook = {
+                on_filetype = function()
+                    local quarto = require("quarto")
+                    quarto.setup()
+                    vim.keymap.set("n", "<leader>qp", quarto.quartoPreview, { silent = true, noremap = true })
+                end,
+            }
+        },
+    },
+
 }
