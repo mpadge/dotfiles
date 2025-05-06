@@ -259,11 +259,15 @@ return {
             "jmbuhr/otter.nvim",
             "nvim-treesitter/nvim-treesitter",
         },
+        config = function()
+            require("quarto").setup({
+                lspFeatures = {
+                    enabled = true,
+                    chunks = 'curly',
+                },
+            })
+        end,
         opts = {
-            lspFeatures = {
-                enabled = true,
-                chunks = 'curly',
-            },
             hook = {
                 on_filetype = function()
                     local quarto = require("quarto")
