@@ -253,12 +253,17 @@ return {
         build = function() vim.fn["mkdp#util#install"]() end,
     },
     {
+
         "quarto-dev/quarto-nvim",
         dependencies = {
             "jmbuhr/otter.nvim",
             "nvim-treesitter/nvim-treesitter",
         },
         opts = {
+            lspFeatures = {
+                enabled = true,
+                chunks = 'curly',
+            },
             hook = {
                 on_filetype = function()
                     local quarto = require("quarto")
