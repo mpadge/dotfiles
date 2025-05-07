@@ -201,11 +201,13 @@ return {
     },
     {
         "R-nvim/cmp-r",
-        require("cmp").setup({
-            sources = {
-                { name = "cmp_r" },
-            },
-        }),
+        config = function()
+            require'cmp'.setup({
+                sources = {
+                    { name = "cmp_r" },
+                },
+            })
+        end,
     },
     -- override nvim-cmp and add extra cmps
     {
