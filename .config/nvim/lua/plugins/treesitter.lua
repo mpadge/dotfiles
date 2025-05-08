@@ -12,26 +12,29 @@ return {
             ---@diagnostic disable-next-line: missing-fields
             require('nvim-treesitter.configs').setup {
                 auto_install = true,
-                ensure_installed = {
-                    'r',
-                    'python',
-                    'markdown',
-                    'markdown_inline',
-                    'julia',
+                ensure_installed = { -- Add more parsers:
                     'bash',
-                    'yaml',
-                    'lua',
-                    'vim',
-                    'query',
-                    'vimdoc',
-                    'latex', -- requires tree-sitter-cli (installed automatically via Mason)
-                    'html',
                     'css',
                     'dot',
+                    'html',
                     'javascript',
+                    'json',
+                    'julia',
+                    'latex', -- requires tree-sitter-cli (installed automatically via Mason)
+                    'lua',
+                    'markdown',
+                    'markdown_inline',
                     'mermaid',
                     'norg',
+                    'python',
+                    'query',
+                    'regex',
+                    'r',
+                    'tsx',
                     'typescript',
+                    'vim',
+                    'vimdoc',
+                    'yaml',
                 },
                 highlight = {
                     enable = true,

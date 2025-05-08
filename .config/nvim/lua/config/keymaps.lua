@@ -16,5 +16,5 @@ end
 vim.keymap.set("n", "<C-L>", toggle_lsp_client)
 
 vim.keymap.set("n", "<localleader>fb", function()
-    require("telescope").extensions.file_browser.file_browser()
+	require("telescope").extensions.file_browser.file_browser()
 end)
