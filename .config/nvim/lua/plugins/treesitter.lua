@@ -29,6 +29,7 @@ return {
                     'python',
                     'query',
                     'regex',
+                    'rnoweb',
                     'r',
                     'tsx',
                     'typescript',
