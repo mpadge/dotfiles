@@ -116,7 +116,6 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
-alias code="cd /data/mega/code/repos"
 
 # Source autojump, so it works in plain bash, as well as tmux
 if [ -f /etc/profile.d/autojump.bash ]; then
@@ -153,6 +152,9 @@ test -r $d && eval "$(dircolors $d)"
 
 # thefuck
 eval "$(thefuck --alias)"
+
+# https://starship.rs
+eval "$(starship init bash)"
 
 # from @karpfen:
 function run {
