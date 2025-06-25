@@ -1,5 +1,5 @@
-import = [
-    "~/.config/alacritty/themes/themes/omni.toml"
+general.import = [
+    "~/.config/alacritty/themes/omni.toml"
 ]
 
 [window]
@@ -19,3 +19,4 @@ style = "Bold"
 [font.normal]
 family = "FiraCode Nerd Font"
 style = "Regular"
+
