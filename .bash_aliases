@@ -35,7 +35,7 @@ alias instloc="sudo Rscript -e 'remotes::install_local(path=\".\",upgrade=\"neve
 alias meta="Rscript -e 'codemetar::write_codemeta()'"
 alias reprex="Rscript -e 'reprex::reprex()'"
 alias timer="mongotimer"
-alias clearcache="sudo paccache -r"
+alias clearcache="sudo paccache -r; paru -Sc"
 alias lastinstalls="grep -i installed /var/log/pacman.log"
 alias emojis="firefox https://emcorrales.com/cheatsheets/github-emojis &"
 alias issues="bash /<path>/<to>/issues.bash"
