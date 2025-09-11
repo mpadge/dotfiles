@@ -1,0 +1,40 @@
+# see https://docs.searxng.org/admin/settings/settings.html#settings-use-default-settings
+use_default_settings:
+  engines:
+    remove:
+      - bing
+      - docker hub
+      - hoogle
+      - google
+      - google images
+      - google news
+      - google videos
+      - google scholar
+server:
+  # base_url is defined in the SEARXNG_BASE_URL environment variable, see .env and docker-compose.yml
+  secret_key: "<key>"  # change this!
+  limiter: true  # can be disabled for a private instance
+  image_proxy: true
+ui:
+  static_use_hash: true
+redis:
+  url: redis://redis:6379/0
+engines:
+  - name: arch linux wiki
+    disabled: false
+  - name: crates.io
+    disabled: false
+  - name: lib.rs
+    disabled: false
+  - name: npm
+    disabled: false
+  - name: codeberg
+    disabled: false
+  - name: gitea.com
+    disabled: false
+  - name: sourcehut
+    disabled: false
+  - name: cppreference
+    disabled: false
+  - name: hackernews
+    disabled: false
