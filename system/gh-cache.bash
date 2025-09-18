@@ -92,7 +92,7 @@ if command -v jq &>/dev/null; then
     jq 'group_by(.path) |
         map({
             path: .[0].path,
-            total_size_mb: ((map(.sizeInBytes) | add) / (1024 * 1024)),
+            total_size_mb: (((map(.sizeInBytes) | add) / (1024 * 1024)) | round),
             count: length
         })' "$temp_file" > "$output_file"
 else
@@ -102,3 +102,8 @@ fi
 rm -f "$temp_file"
 
 echo "Combined data saved to $output_file"
+echo "Total MB of cache in previous 24 hours:"
+jq . "$output_file"
+total_mb="$(jq 'map(.total_size_mb) | add' $output_file)"
+
+echo "Overall total: $(total_mb)MB"
