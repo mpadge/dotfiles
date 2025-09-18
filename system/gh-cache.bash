@@ -106,4 +106,4 @@ echo "Total MB of cache in previous 24 hours:"
 jq . "$output_file"
 total_mb="$(jq 'map(.total_size_mb) | add' $output_file)"
 
-echo "Overall total: $(total_mb)MB"
+echo "Overall total: $total_mb MB"
