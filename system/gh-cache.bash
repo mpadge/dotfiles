@@ -44,7 +44,7 @@ find . -mindepth 2 -maxdepth 2 -type d | \
             ' $json_file > temp.json && mv temp.json $json_file
         fi
     else
-        echo "  Error: Failed to run gh cache in $dir"
+        echo "  No gh cache from $dir"
     fi
 
     cd - > /dev/null
@@ -87,11 +87,18 @@ done
 
 echo "]" >> "$temp_file"
 
+# Then group results by "path" and store total sum of cache sizes:
 if command -v jq &>/dev/null; then
-    jq . "$temp_file" > "$output_file"
+    jq 'group_by(.path) |
+        map({
+            path: .[0].path,
+            total_size_mb: ((map(.sizeInBytes) | add) / (1024 * 1024)),
+            count: length
+        })' "$temp_file" > "$output_file"
 else
     mv "$temp_file" "$output_file"
 fi
 
 rm -f "$temp_file"
+
 echo "Combined data saved to $output_file"
