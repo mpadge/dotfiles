@@ -7,7 +7,8 @@
     "lazyvim.plugins.extras.lang.python",
     "lazyvim.plugins.extras.lang.r",
     "lazyvim.plugins.extras.lang.rust",
-    "lazyvim.plugins.extras.lang.typescript"
+    "lazyvim.plugins.extras.lang.typescript",
+    "lazyvim.plugins.extras.lang.yaml"
   ],
   "install_version": 8,
   "news": {
