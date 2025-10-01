@@ -4,11 +4,13 @@ read -s -p "Password -- NOT PAT! -- for 'https://$UNAME@github.com' " PASS
 echo ""
 
 # encryption:
--openssl des3 -salt -md sha256 -pbkdf2 -d -in <path/to/encrypted/file> -out <unencrypted/version> -pass pass:$PASS
+GITTOK="aaagit.txt"
+openssl des3 -salt -md sha256 -pbkdf2 -d \
+    -in <path/to/encrypted/file> -out "$GITTOK" -pass pass:$PASS
 
 PASS=""
-PAT=$(<unencrypted_version)
-rm <unencrypted_version>
+PAT=$(cat "$GITTOK")
+rm "$GITTOK"
 
 # get git remote address:
 if [ "$1" == "" ]; then
@@ -50,27 +52,14 @@ PAT=""
 REMOTE=""
 
 # repeat push for other remotes
-REMOTE=$(git remote -v | grep "originbb" | head -n 1) # bitbucket
-if [[ -n "$REMOTE" && "$BRANCH" == "main" ]]; then # -n -> is non-zero string
-    echo ""
-    echo -n "--------Pushing to bitbucket "
-    git push originbb $BRANCH
+if [[ "$BRANCH" == "main" ]]; then
+    git remote -v | while read -r name url type; do
+    # only "push"" remotes to avoid duplicates, and also exclude origin = github
+    if [[ "$type" == "(push)" ]] && [[ "$name" != "origin" ]]; then
+        echo ""
+        echo -n "--------Pushing to $name- "
+        git push "$url"
+    fi
+done
 fi
-REMOTE=$(git remote -v | grep "origingl" | head -n 1) # gitlab
-if [[ -n "$REMOTE" && "$BRANCH" == "main" ]]; then
-    echo ""
-    echo -n "--------Pushing to gitlab "
-    git push origingl $BRANCH
-fi
-REMOTE=$(git remote -v | grep "originsh" | head -n 1) # sourcehut
-if [[ -n "$REMOTE" && "$BRANCH" == "main" ]]; then
-    echo ""
-    echo -n "--------Pushing to sourcehut "
-    git push originsh $BRANCH
-fi
-REMOTE=$(git remote -v | grep "origincb" | head -n 1) # codeberg
-if [[ -n "$REMOTE" && "$BRANCH" == "main" ]]; then
-    echo ""
-    echo -n "--------Pushing to codeberg "
-    git push origincb $BRANCH
-fi
+echo ""
