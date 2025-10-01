@@ -1,6 +1,6 @@
 # mpadge dotfiles
 
-0or [Archlinux](https://archlinux.org). Lots of things might work or be applicable elsewhere, but many are also arch-specific.
+0n [Archlinux](https://archlinux.org). Lots of things might work or be applicable elsewhere, but many are also arch-specific.
 
 ## Uses
 
