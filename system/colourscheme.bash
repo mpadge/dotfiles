@@ -2,6 +2,11 @@
 
 # Script to switch colour schemes from dark to light
 
+NC='\033[0m'
+ARG='\033[0;31m' # red
+TXT='\033[0;32m' # green, or 1;32m for light green
+SYM='\u2192' # right arrow
+
 ALACRITTY_CONFIG=~/.config/alacritty/alacritty.toml
 
 if [ "$1" == "" ]; then
