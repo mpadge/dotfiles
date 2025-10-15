@@ -46,6 +46,7 @@ return {
         'hrsh7th/nvim-cmp',
         version = false, -- last release is way too old
         event = 'InsertEnter',
+        enabled = true,
         dependencies = {
             -- nvim-cmp source for neovim builtin LSP client
             'hrsh7th/cmp-nvim-lsp',
@@ -57,7 +58,7 @@ return {
             -- Luasnip completion source for nvim-cmp
             'saadparwaiz1/cmp_luasnip',
             -- Completion using R.nvim as backend
-            "R.nvim/cmp-r",
+            "R-nvim/cmp-r",
         },
         opts = function()
             local cmp = require('cmp')
