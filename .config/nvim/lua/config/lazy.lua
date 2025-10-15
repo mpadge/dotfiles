@@ -19,6 +19,8 @@ require("lazy").setup({
     -- add LazyVim and import its plugins
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
     -- import/override with your plugins
+    { "nvim-lua/plenary.nvim" },
+    { "nvim-telescope/telescope.nvim", tag = '0.1.8' },
     { import = "plugins" },
   },
   defaults = {
