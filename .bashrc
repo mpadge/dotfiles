@@ -3,6 +3,7 @@
 # for examples
 
 export EDITOR='nvim'
+export NVIM_COLOUR_SCHEME="none"
 
 # If not running interactively, don't do anything
 case $- in
