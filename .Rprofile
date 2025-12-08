@@ -5,7 +5,7 @@ options(repos = r)
 rm (r)
 #        })
 
-# http://stackoverflow.com/questions/24387660/how-to-change-libpaths-permanently-in-r
+# http://STACKOVerflow.com/questions/24387660/how-to-change-libpaths-permanently-in-r
 # Note that the order of these has to be reversed for initial installation of
 # nvimcom, then they can be reset.
 #.libPaths(c ('/usr/local/lib/R/site-library', .libPaths ()))
@@ -20,16 +20,34 @@ options (editor = 'vim')
 options (browser = 'firefox')
 #options (prompt='R> ', digits=4)
 
+lintr.linter_file = "~/.lintr"
+
+# https://github.com/R-nvim/R.nvim/blob/main/doc/R.nvim.txt
+# Section 6.10:
+options(languageserver.server_capabilities = list(
+    hoverProvider = FALSE,
+    signatureHelpProvider = FALSE,
+    completionProvider = FALSE,
+    completionItemResolve = FALSE
+))
+
 # https://github.com/REditorSupport/languageserver/issues/503
-# cat("<project> [start]", Sys.getpid(), paste0(commandArgs(), collapse = " "), file = "~/rprofile.log", append = TRUE)
+options(languageserver.diagnostics = TRUE)
+cat("<project> [start]", Sys.getpid(), paste0(commandArgs(), collapse = " "), "\n", file = "~/rprofile.log", append = FALSE)
 # options(languageserver.debug = function(options) {
 #     TRUE
 # })
+cat("Before language server ...\n", file = "~/rprofile.log", append = TRUE)
 options(languageserver.formatting_style = function(options) {
-    spaceout::spaceout_style ()
+    cat("In language server ...\n", file = "~/rprofile.log", append = TRUE)
+    spaceout::spaceout_style()
 })
-options(languageserver.diagnostics = FALSE)
-# cat("[end]", "\n", file = "~/rprofile.log", append = TRUE)
+# options(languageserver.server_capabilities =
+#     list (completionProvider = TRUE, completionItemResolve = TRUE)
+# )
+# options(languageserver.diagnostics = FALSE)
+cat("After language server ...\n", file = "~/rprofile.log", append = TRUE)
+cat("--------[end]\n", "\n", file = "~/rprofile.log", append = TRUE)
 
 utils::rc.settings(ipck = TRUE) # tab-complete package names
 
@@ -139,8 +157,6 @@ attach(.env)
         message (BG, indent, "         *******", BLUE, "RRRRRRR    RRRRRRR", BG, "       ", NC)
         message (BG, indent, "                ", BLUE, "RRRRRRR     RRRRRRRR", BG, "     ", NC)
         # -------------------- END R SYMBOL -------------------
-
-        message ("\n")
 
         #for (i in 2500:2600)
         #    cat(eval(parse(text=paste("\"\\u", i, "\"", sep=""))), " ")
