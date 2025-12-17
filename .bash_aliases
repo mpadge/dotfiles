@@ -61,6 +61,7 @@ alias printer="bash /<path>/<to>/printer.bash"
 alias gparted="gksu gparted &"
 alias screenshot="xwd -root -out screenshot.xwd && convert screenshot.xwd screenshot.png && rm screenshot.xwd"
 alias search="bash /<path>/<to>/searxng.bash"
+alias actions="bash /<path/<to>/actions.bash"
 alias lstt="ls -latr | bash /<path>/<to>/tte.bash"
 cat_to_tte() {
 	cat "$1" | bash / <path >/ <to >/tte.bash
