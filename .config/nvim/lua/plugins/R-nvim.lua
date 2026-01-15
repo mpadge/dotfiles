@@ -4,8 +4,6 @@ local half_width = math.floor(width_float / 2)
 
 return {
 
-    -- https://github.com/R-nvim/cmp-r/wiki
-
     -- Snippet Engine written in Lua
     {
         'L3MON4D3/LuaSnip',
@@ -57,8 +55,6 @@ return {
             'hrsh7th/cmp-path',
             -- Luasnip completion source for nvim-cmp
             'saadparwaiz1/cmp_luasnip',
-            -- Completion using R.nvim as backend
-            "R-nvim/cmp-r",
         },
         opts = function()
             local cmp = require('cmp')
