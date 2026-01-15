@@ -69,3 +69,4 @@ cat_to_tte() {
 alias cattt='cat_to_tte'
 alias paru-query='paru -Ssq $1'
 alias vim='nvim'
+alias o='opencode .'
