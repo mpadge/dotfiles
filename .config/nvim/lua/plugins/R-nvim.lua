@@ -147,7 +147,7 @@ return {
                 mapping = cmp.mapping.preset.insert({
                     -- <CR> accepts currently selected item.
                     -- Set `select` to `false` to only confirm explicitly selected items.
-                    ['<CR>'] = cmp.mapping.confirm({ select = false }),
+                    -- ['<CR>'] = cmp.mapping.confirm({ select = false }),
                     ['<S-CR>'] = cmp.mapping.confirm({
                         behavior = cmp.ConfirmBehavior.Replace,
                         select = false,
