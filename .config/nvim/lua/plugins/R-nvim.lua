@@ -114,7 +114,7 @@ return {
                 },
                 sources = cmp.config.sources({
                     -- { name = 'cmp_zotcite' },
-                    { name = 'cmp_r' },
+                    -- { name = 'cmp_r' },
                     { name = 'otter' },
                     { name = 'nvim_lsp', priority = 50 },
                     { name = 'path', priority = 40 },
@@ -138,7 +138,7 @@ return {
                             cmdline = ":",
                             path = '',
                             cmp_zotcite = 'Z',
-                            cmp_r = 'R'
+                            -- cmp_r = 'R'
                         })[entry.source.name] or entry.source.name
                         return vim_item
                     end
@@ -213,9 +213,9 @@ return {
                 })
             })
 
-            require("cmp_r").setup({
-                doc_width = 62,
-            })
+            -- require("cmp_r").setup({
+            --     doc_width = 62,
+            -- })
         end,
     },
 
