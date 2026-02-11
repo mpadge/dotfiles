@@ -17,6 +17,8 @@ elif [ "$1" == "commits" ]; then
     else
         Rscript -e "mpmisc::gh_daily_contributions($2)"
     fi
+elif [ "$1" == "codeberg" ]; then
+    Rscript -e "mpmisc::gh_notifications ('codeberg')"
 elif [ "$1" == "help" ]; then
     echo -e "${SYM} ${ARG}no arguments${NC} : ${TXT}Display new GitHub notifications.${NC}"
     echo -e "${SYM} ${ARG}help${NC}         : ${TXT}Display these help messages.${NC}"
