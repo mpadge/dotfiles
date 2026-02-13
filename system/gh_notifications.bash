@@ -10,7 +10,7 @@ if [ "$1" == "" ]; then
 elif [ "$1" == "done" ]; then
     Rscript -e "mpmisc::mark_gh_notifications_as_read()"
 elif [[ "$1" =~ ^[0-9]+$ ]]; then
-    Rscript -e "mpmisc::open_gh_notification ($1)"
+    Rscript -e "mpmisc::open_gh_notification ('github', $1)"
 elif [ "$1" == "commits" ]; then
     if [ "$2" == "" ]; then
         Rscript -e "mpmisc::gh_contributions ()"
