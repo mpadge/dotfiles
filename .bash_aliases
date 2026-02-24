@@ -74,3 +74,6 @@ alias vim='nvim'
 alias o='opencode .'
 alias r-lib='bash /<path>/<to>/r-lib-actions.bash'
 alias opencodeclean='cp ~/.config/opencode/opencode.json ~/.config/.; rm -rf ~/.local/share/opencode/ ~/.cache/opencode/ ~/.config/opencode/'
+rmterminalwhite() {
+    sed -i 's/[[:space:]]*$//' "$1"
+}
