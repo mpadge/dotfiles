@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3:*)",
+      "Bash(grep:*)",
+      "Bash(Rscript:*)",
+      "Bash(sed:*)",
+      "Bash(git stash:*)",
+      "Bash(git:*)",
+      "Bash(echo:*)",
+      "Bash(do:*)",
+      "Bash(printf y\\\\ny\\\\ny\\\\ny\\\\ny\\\\nn\\\\ny\\\\n:*)",
+      "Bash(printf n\\\\ny\\\\n:*)",
+      "Bash(printf:*)",
+      "Bash(.specify/scripts/bash/create-new-feature.sh:*)",
+      "Bash(.specify/scripts/bash/setup-plan.sh:*)",
+      "Bash(.specify/scripts/bash/update-agent-context.sh:*)",
+      "Bash(ls:*)"
+    ]
+  }
+}
