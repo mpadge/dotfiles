@@ -1,0 +1,5 @@
+customLanguages:
+  r:
+    libraryPath: /home/smexus/.config/ast-grep/r.dylib
+    extensions: [r, R]
+    expandoChar: _

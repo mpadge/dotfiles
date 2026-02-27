@@ -77,3 +77,4 @@ alias opencodeclean='cp ~/.config/opencode/opencode.json ~/.config/.; rm -rf ~/.
 rmterminalwhite() {
     sed -i 's/[[:space:]]*$//' "$1"
 }
+alias sg='ast-grep run -c ~/.config/ast-grep/sgconfig.yml'
