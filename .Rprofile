@@ -209,12 +209,20 @@ attach(.env)
                 }
 
                 cli::cli_h2 ("R-universe status")
-                r_univ_build_status <- function (univ = "ropensci-review-tools") {
+                r_univ_build_status <- function (univ = "ropensci-review-tools", maintainer = NULL) {
                     u <- paste0 ("https://", univ, ".r-universe.dev/api/packages")
                     packages <- httr2::request(u) |>
                         httr2::req_user_agent("R-universe docs") |>
                         httr2::req_perform() |>
                         httr2::resp_body_json()
+                    if (!is.null (maintainer)) {
+                        index <- which (vapply (
+                            packages,
+                            function (p) grepl (maintainer, p$Maintainer, ignore.case = TRUE),
+                            logical (1L)
+                        ))
+                        packages <- packages [index]
+                    }
                     pkg_names <- vapply (packages, function (p) p$Package, character (1L))
                     pkg_jobs <- lapply (packages, function (p) p$`_jobs`)
                     pkg_checks <- lapply (pkg_jobs, function (i) {
@@ -246,6 +254,7 @@ attach(.env)
 
                 }
                 r_univ_build_status ("ropensci-review-tools")
+                r_univ_build_status ("ropensci", "mark padgham")
                 r_univ_build_status ("UrbanAnalyst")
             }
         } else {
