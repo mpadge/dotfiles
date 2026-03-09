@@ -118,12 +118,11 @@ attach(.env)
         lns [[2]] <- paste0 (ss_name, ' (kernel ', rsys ['release'], ')')
         lns [[3]] <- paste0 ('machine = ', rpl, ': ', rsys ['nodename'])
         lns [[4]] <- paste0 ('wd: ', getwd ())
-        lns <- sapply (lns, function (i) 
-            {
+        lns <- vapply (lns, function (i) {
                 if ((nchar (i) %% 2) != 0)
                 i <- paste0 (i, ' ')
                 return (i)
-            })
+        }, character (1L))
         nc <- max (sapply (lns, nchar))
         gap <- 2 # number of character before and after
         nci <- sapply (lns, nchar, USE.NAMES=FALSE)
@@ -199,13 +198,15 @@ attach(.env)
                     cli::cli_alert_info ("Updatable packages:")
                     cli::cli_ol(items = rownames (old))
                     message ("\n")
-                } else 
-                message ('All packages up to date\n')
+                } else {
+                    message ('All packages up to date\n')
+                }
 
                 cli::cli_h2 ("foghorn results")
                 x <- foghorn::summary_cran_results (email = "mark.padgham@email.com")
-                if (sum (x [, c ("error", "fail", "warn", "note")]) > 0)
-                cli::cli_text ("Run '.env$myfoghorn()' for details")
+                if (sum (x [, c ("error", "fail", "warn", "note")]) > 0) {
+                    cli::cli_text ("Run '.env$myfoghorn()' for details")
+                }
             }
         } else {
             message ('nope, no internet\n')
