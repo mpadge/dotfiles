@@ -4,6 +4,7 @@
 
 export EDITOR='nvim'
 export NVIM_COLOUR_SCHEME="none"
+export CLAUDE_HOME='/<claude>/<home>/<path>'
 
 # If not running interactively, don't do anything
 case $- in
