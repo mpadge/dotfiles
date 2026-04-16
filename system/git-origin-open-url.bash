@@ -4,13 +4,14 @@ if ! git -C . rev-parse; then
     exit 1
 fi
 
-uo=$(git remote -v | grep origin | head -1 | sed 's/^\w*//' | tr -s ' ' | cut -d ' ' -f 1)
-uu=$(git remote -v | grep upstream | head -1 | sed 's/^\w*//' | tr -s ' ' | cut -d ' ' -f 1)
+url=$(git remote -v | grep origin | head -1 | awk '{print $2}')
 
-if [[ $uu ]]; then
-    echo "opening $uu"
-    xdg-open $uu &
-else
-    echo "opening $uo"
-    xdg-open $uo &
+if [[ "$url" == git@* ]]; then
+    url="${url#git@}"
+    url="${url/:/\/}"
+    url="${url%.git}"
+    url="https://$url"
 fi
+
+echo "opening $url"
+xdg-open "$url" &
