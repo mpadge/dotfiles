@@ -23,3 +23,13 @@ vim.g.autoformat = false
 
 vim.opt.relativenumber = false
 vim.opt.shiftwidth = 4
+
+-- https://github.com/PMassicotte/loom-lsp
+vim.lsp.config("loom-lsp", {
+    cmd = { "loom-lsp", "--stdio" },
+    filetypes = { "quarto" },
+    root_dir = vim.fs.root(0, { ".git", "_quarto.yml" }),
+})
+
+vim.lsp.enable("loom-lsp")
+vim.treesitter.language.register("javascript", "ojs")
