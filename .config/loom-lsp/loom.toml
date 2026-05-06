@@ -1,0 +1,30 @@
+# https://github.com/PMassicotte/loom-lsp
+[server]
+log_level = "info"  # or one of: trace | debug | info | warn | error
+
+[languages.python]
+server_command = ["pyright-langserver", "--stdio"]
+root_markers = ["pyproject.toml", "setup.py"]
+
+[languages.r]
+server_command = ["R", "--slave", "-e", "languageserver::run()"]
+root_markers = [".Rproj", "DESCRIPTION"]
+
+[languages.lua]
+server_command = ["lua-language-server"]
+
+[languages.julia]
+server_command = [
+  "julia",
+  "--startup-file=no",
+  "--history-file=no",
+  "-e",
+  "using LanguageServer; runserver()"
+]
+
+[languages.ts]
+server_command = ["typescript-language-server", "--stdio"]
+
+# This lsp will be used for yaml code chunks but also for Quarto frontmatter
+[languages.yaml]
+server_command = ["yaml-language-server", "--stdio"]
