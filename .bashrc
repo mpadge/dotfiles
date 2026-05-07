@@ -367,3 +367,5 @@ cd() {
 # adds time to startup
 check_directory_for_new_repository
 # ---------- ONEFETCH END ----------
+
+bash /<path>/<to>/scripts/check-reviewbot.bash
