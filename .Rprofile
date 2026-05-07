@@ -5,14 +5,6 @@ options(repos = r)
 rm (r)
 #        })
 
-# http://STACKOVerflow.com/questions/24387660/how-to-change-libpaths-permanently-in-r
-# Note that the order of these has to be reversed for initial installation of
-# nvimcom, then they can be reset.
-#.libPaths(c ('/usr/local/lib/R/site-library', .libPaths ()))
-#.libPaths(c ('/usr/lib/R/library', .libPaths ()))
-#.libPaths(c ('~/R/x86_64-pc-linux-gnu-library/4.5', .libPaths ()))
-
-#options (stringsAsFactors=FALSE)
 #options (max.print=100)
 options (width = 80)
 options (scipen = 10)
