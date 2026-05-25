@@ -78,3 +78,4 @@ rmterminalwhite() {
     sed -i 's/[[:space:]]*$//' "$1"
 }
 alias sg='ast-grep run -c ~/.config/ast-grep/sgconfig.yml'
+alias runiv='Rscript /<path>/<to>/scripts/r-univ-checks.R'
