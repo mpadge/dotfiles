@@ -12,6 +12,8 @@ return {
                 ruby = { "rubocop", "ruby" },
                 lua = { "lua_language_server" },
                 r = { "r_language_server" },
+                markdown = { "vale" },
+                text = { "vale" },
             }
 
             g.ale_r_lintr_lint_package = 0
