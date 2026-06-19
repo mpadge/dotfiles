@@ -80,3 +80,4 @@ rmterminalwhite() {
 alias sg='ast-grep run -c ~/.config/ast-grep/sgconfig.yml'
 alias runiv='Rscript /<path>/<to>/scripts/r-univ-checks.R'
 alias aicosts='bunx ccusage'
+alias dependabot="bash /<path/<to>/dependabot-local.bash"
