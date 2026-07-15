@@ -120,8 +120,8 @@ if [ -f ~/.bash_aliases ]; then
 fi
 
 # Source autojump, so it works in plain bash, as well as tmux
-if [ -f /etc/profile.d/autojump.bash ]; then
-	. /etc/profile.d/autojump.bash
+if [ -f /etc/profile.d/autojump.sh ]; then
+	. /etc/profile.d/autojump.sh
 fi
 
 # enable programmable completion features (you don't need to enable
