@@ -7,13 +7,15 @@ vim.g.linebreak = 80
 vim.g.textwidth = 80
 
 -- https://vi.stackexchange.com/a/39800
--- Use internal formatting for bindings like gq.
-vim.api.nvim_create_autocmd('LspAttach', {
+-- LazyVim sets a *global* formatexpr (conform.nvim), so buffer-local
+-- `= nil` just falls back to that instead of clearing it. Set it to an
+-- explicit empty string, on every buffer, so `gq` always uses Vim's
+-- internal formatting.
+vim.api.nvim_create_autocmd({ 'BufEnter', 'LspAttach' }, {
   callback = function(args)
-    vim.bo[args.buf].formatexpr = nil
+    vim.bo[args.buf].formatexpr = ''
   end,
 })
--- ... but that doesn't work, so just need to manually `:set formatexpr=` until better solution found.
 
 -- https://github.com/stevearc/conform.nvim/blob/master/doc/recipes.md#command-to-toggle-format-on-save
 -- Says "disable_automate = true", but
