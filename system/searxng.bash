@@ -10,7 +10,7 @@ if ! pgrep -f "/usr/local/searxng/dockerfiles/docker-entrypoint.sh" > /dev/null;
 
     if ! docker ps -a | grep "searxng" > /dev/null; then
         echo "Searxng is not running. Starting it now..."
-        docker compose -f /usr/local/searxng-docker/docker-compose.yaml up -d
+        docker compose -f /usr/local/searxng/docker-compose.yaml up -d
         sleep 2
     fi
 fi
