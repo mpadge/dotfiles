@@ -11,7 +11,7 @@ return {
             g.ale_linters = {
                 ruby = { "rubocop", "ruby" },
                 lua = { "lua_language_server" },
-                r = { "r_language_server" },
+                r = { "lintr" },
                 markdown = { "vale" },
                 text = { "vale" },
             }
