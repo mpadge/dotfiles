@@ -26,11 +26,10 @@ return {
             local({
                 patch_to_json <- function() {
                     ns <- asNamespace("languageserver")
-                    payload <- list(jsonrpc = self$jsonrpc, id = self$id)
                     if (!is.null(self$error)) {
-                        payload$error <- self$error
+                        payload <- list(jsonrpc = self$jsonrpc, id = self$id, error = self$error)
                     } else {
-                        payload$result <- self$result
+                        payload <- list(jsonrpc = self$jsonrpc, id = self$id, result = self$result)
                     }
                     get("response_to_json", envir = ns)(payload)
                 }
