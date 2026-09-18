@@ -199,6 +199,10 @@ attach(.env)
                 if (sum (x [, c ("error", "fail", "warn", "note")]) > 0) {
                     cli::cli_text ("Run '.env$myfoghorn()' for details")
                 }
+                x <- foghorn::summary_cran_results (email = "mark@ropensci.org")
+                if (sum (x [, c ("error", "fail", "warn", "note")]) > 0) {
+                    cli::cli_text ("Run '.env$myfoghorn()' for details")
+                }
 
                 cli::cli_h2 ("R-universe status")
                 mpmisc::r_univ_build_status ("ropensci-review-tools")
