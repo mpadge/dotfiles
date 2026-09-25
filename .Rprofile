@@ -25,11 +25,11 @@ options(languageserver.server_capabilities = list(
 
 # https://github.com/REditorSupport/languageserver/issues/503
 options(languageserver.diagnostics = TRUE)
-cat("<project> [start]", Sys.getpid(), paste0(commandArgs(), collapse = " "), "\n", file = "~/rprofile.log", append = FALSE)
+# cat("<project> [start]", Sys.getpid(), paste0(commandArgs(), collapse = " "), "\n", file = "~/rprofile.log", append = FALSE)
 # options(languageserver.debug = function(options) {
 #     TRUE
 # })
-cat("Before language server ...\n", file = "~/rprofile.log", append = TRUE)
+# cat("Before language server ...\n", file = "~/rprofile.log", append = TRUE)
 options(languageserver.formatting_style = function(options) {
     cat("In language server ...\n", file = "~/rprofile.log", append = TRUE)
     spaceout::spaceout_style()
@@ -38,8 +38,8 @@ options(languageserver.formatting_style = function(options) {
 #     list (completionProvider = TRUE, completionItemResolve = TRUE)
 # )
 # options(languageserver.diagnostics = FALSE)
-cat("After language server ...\n", file = "~/rprofile.log", append = TRUE)
-cat("--------[end]\n", "\n", file = "~/rprofile.log", append = TRUE)
+# cat("After language server ...\n", file = "~/rprofile.log", append = TRUE)
+# cat("--------[end]\n", "\n", file = "~/rprofile.log", append = TRUE)
 
 utils::rc.settings(ipck = TRUE) # tab-complete package names
 
@@ -77,8 +77,11 @@ attach(.env)
             grepl ("none", cs [1])
         }
 
-        if ('colorout' %in% rownames (utils::installed.packages ()))
-        {
+        colorout_path <- tryCatch (
+            find.package ("colorout"),
+            error = function (e) NULL
+        )
+        if (length (colorout_path) > 0L) {
             require (colorout, quietly = TRUE)
             #colorout::show256Colors() # to see colours
             if (scheme_is_dark ()) {
