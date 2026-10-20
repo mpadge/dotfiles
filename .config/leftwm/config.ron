@@ -45,6 +45,8 @@
         (command: SoftReload, value: "", modifier: ["modkey", "Shift"], key: "r"),
         (command: Execute, value: "loginctl kill-session $XDG_SESSION_ID", modifier: ["modkey", "Shift"], key: "x"),
         (command: Execute, value: "slock", modifier: ["modkey", "Control"], key: "l"),
+        (command: Execute, value: "sh -c 'maim ~/Pictures/screenshot-$(date +%F_%H-%M-%S).png'", modifier: [], key: "Print"),
+        (command: Execute, value: "sh -c 'maim -s | xclip -selection clipboard -t image/png'", modifier: ["modkey", "Shift"], key: "s"),
         (command: MoveToLastWorkspace, value: "", modifier: ["modkey", "Shift"], key: "w"),
         (command: SwapTags, value: "", modifier: ["modkey"], key: "w"),
         (command: MoveWindowUp, value: "", modifier: ["modkey", "Shift"], key: "k"),
