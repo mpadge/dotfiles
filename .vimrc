@@ -221,7 +221,7 @@ let g:himalaya_mailbox_picker = 'native'
 "omni-completion
 set omnifunc=syntaxcomplete#Complee
 
-let R_source = '/home/smexus/tmux_split.vim'
+let R_source = '/home/<me>/tmux_split.vim'
 " https://github.com/jcfaria/Vim-R-plugin/issues/204
 let g:ScreenImpl = 'Tmux'
 let g:ScreenShellInitialFocus = 'shell' 

@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-UNAME=smexus
+UNAME=<me>
 DEV=$(ls /run/media/$UNAME)
 
 echo "---------------------------------------------------"

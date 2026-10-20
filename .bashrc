@@ -1,10 +1,6 @@
-# ~.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
-
 export EDITOR='nvim'
 export NVIM_COLOUR_SCHEME="none"
-export CLAUDE_CONFIG_DIR='/<my>/<path>
+export CLAUDE_CONFIG_DIR='/<some>/<where>'
 export GH_TELEMETRY=false
 export DO_NOT_TRACK=true
 
@@ -120,8 +116,8 @@ if [ -f ~/.bash_aliases ]; then
 fi
 
 # Source autojump, so it works in plain bash, as well as tmux
-if [ -f /etc/profile.d/autojump.sh ]; then
-	. /etc/profile.d/autojump.sh
+if [ -f /etc/profile.d/autojump.bash ]; then
+	. /etc/profile.d/autojump.bash
 fi
 
 # enable programmable completion features (you don't need to enable
@@ -246,6 +242,9 @@ export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 #export GTAGSCONF=/usr/local/share/gtags/gtags.conf
 #export GTAGSLABEL=pygments
 
+# Extension need to find boost for libosmium:
+export LD_LIBRARY_PATH=/usr/include/boost/:$LD_LIBRARY_PATH
+
 # ------------------------------------
 #     a few colours
 # ------------------------------------
@@ -334,7 +333,7 @@ if [ "$git_repository" ]; then
     echo -e ""
 fi
 
-bash /<path>/<to>/scripts/r-version.bash
+bash /<some>/<where>/system/scripts/r-version.bash
 
 export PATH="$PATH:$HOME/miniconda/bin"
 
@@ -367,5 +366,7 @@ cd() {
 # adds time to startup
 check_directory_for_new_repository
 # ---------- ONEFETCH END ----------
+#
 
-bash /<path>/<to>/scripts/check-reviewbot.bash
+# opencode
+export PATH=/home/<me>/.opencode/bin:$PATH
