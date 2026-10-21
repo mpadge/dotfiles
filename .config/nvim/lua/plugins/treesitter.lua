@@ -37,8 +37,5 @@ return {
                 'yaml',
             },
         },
-    },
-
-    -- filetype detection for *.d2
-    { "terrastruct/d2-vim", ft = "d2" },
+    }
 }
