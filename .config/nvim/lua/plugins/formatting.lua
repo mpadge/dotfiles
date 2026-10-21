@@ -18,8 +18,14 @@ return {
             graphql = { "prettier" },
             lua = { "stylua" },
             python = { "isort", "black" },
+            d2 = { "d2" },
         },
         formatters = {
+            d2 = {
+                command = "d2",
+                args = { "fmt", "$FILENAME" },
+                stdin = false,
+            },
             shfmt = {
                 prepend_args = { "-i", "4" },
             },

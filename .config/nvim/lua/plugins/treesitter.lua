@@ -14,6 +14,7 @@ return {
             ensure_installed = {
                 'bash',
                 'css',
+                'd2',
                 'dot',
                 'html',
                 'javascript',
@@ -36,5 +37,8 @@ return {
                 'yaml',
             },
         },
-    }
+    },
+
+    -- filetype detection for *.d2
+    { "terrastruct/d2-vim", ft = "d2" },
 }
