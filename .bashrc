@@ -1,6 +1,6 @@
 export EDITOR='nvim'
 export NVIM_COLOUR_SCHEME="none"
-export CLAUDE_CONFIG_DIR='/<some>/<where>'
+export CLAUDE_CONFIG_DIR='/<some>/<where>/claude'
 export GH_TELEMETRY=false
 export DO_NOT_TRACK=true
 
