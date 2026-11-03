@@ -58,7 +58,12 @@ if [[ "$BRANCH" == "main" ]]; then
     if [[ "$type" == "(push)" ]] && [[ "$name" != "origin" ]]; then
         echo ""
         echo -n "--------Pushing to $name- "
-        git push "$url"
+        # Explicit refspec: a bare `git push <url>` uses the upstream
+        # branch, which fails for any URL other than the tracked remote.
+        # Also continue past failures, and keep git from consuming the loop's
+        # stdin.
+        git push "$url" "refs/heads/$BRANCH:refs/heads/$BRANCH" < /dev/null \
+            || echo "Push to $name failed; continuing"
     fi
 done
 fi
