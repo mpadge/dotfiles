@@ -2,6 +2,18 @@
 
 0n [Archlinux](https://archlinux.org). Lots of things might work or be applicable elsewhere, but many are also arch-specific.
 
+Also includes code for dealing with multiple Git remote locations. Most of my
+code is mirrored in many places. This repo, for example, can be found in these
+places (in alphabetical order):
+
+- https://bitbucket.org/mpadge/dotfiles/
+- https://codeberg.org/mpadge/dotfiles
+- https://codefloe.com/mpadge/dotfiles
+- https://git.sr.ht/~mpadge/dotfiles
+- https://github.com/mpadge/dotfiles
+- https://gitlab.com/mpadge/dotfiles
+- https://tangled.org/mpadge.tngl.sh/dotfiles
+
 ## Uses
 
 - [leftwm](https://leftwm.org) tiling window manager
