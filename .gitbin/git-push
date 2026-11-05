@@ -1,0 +1,83 @@
+#!/usr/bin/bash
+
+# Usage: git-push [<remote>|all] [<branch>] [<further git push args>]
+#
+# - Any named remote is pushed to like a normal `git push`, with all args
+#   passed straight through.
+# - "all" pushes the branch (default: current) to every remote.
+# - No args: pushes to every remote if the branch is the "default" branch,
+#   otherwise only to the single upstream remote.
+#
+# "Default branch" and "upstream remote" are forge-agnostic and must be set
+# with git config, either locally (per repo) or globally:
+#
+#   git config gitbin.defaultBranch main     # branch that fans out to all
+#   git config gitbin.upstream origin        # remote that gets other branches
+#
+# (add --global to set for all repos). Not needed for `git-push <remote>`
+# or `git-push all`.
+
+if [ -n "$1" ] && [ "$1" != "all" ]; then
+    exec git push "$@"
+fi
+
+FORCE_ALL=""
+if [ "$1" == "all" ]; then FORCE_ALL=1; shift; fi
+
+BRANCH=${1:-$(git branch --show-current)}
+if [ -z "$BRANCH" ]; then
+    echo "No branch given and not on a branch" >&2
+    exit 1
+fi
+[ $# -gt 0 ] && shift
+
+REMOTES=$(git remote)
+if [ -z "$REMOTES" ]; then
+    echo "No git remotes found" >&2
+    exit 1
+fi
+
+if [ -z "$FORCE_ALL" ]; then
+    UPSTREAM=$(git config gitbin.upstream)
+    DEFBRANCH=$(git config gitbin.defaultBranch)
+    if [ -z "$UPSTREAM" ] || [ -z "$DEFBRANCH" ]; then
+        {
+            echo "git-push: required git config not set:"
+            [ -z "$DEFBRANCH" ] && echo "  gitbin.defaultBranch  ('default' branch pushed to ALL remotes)"
+            [ -z "$UPSTREAM" ] && echo "  gitbin.upstream       (single remote for all other branches)"
+            echo ""
+            echo "Set them for this repository only:"
+            echo "  git config gitbin.defaultBranch main"
+            echo "  git config gitbin.upstream origin"
+            echo ""
+            echo "or for all repositories (add --global):"
+            echo "  git config --global gitbin.defaultBranch main"
+            echo "  git config --global gitbin.upstream origin"
+            echo ""
+            echo "A local setting overrides a global one."
+            echo "Or bypass with: git-push all   |   git-push <remote>"
+        } >&2
+        exit 1
+    fi
+    if ! grep -qx "$UPSTREAM" <<< "$REMOTES"; then
+        echo "git-push: gitbin.upstream '$UPSTREAM' is not a remote of this repo" >&2
+        exit 1
+    fi
+fi
+
+if [ -z "$FORCE_ALL" ] && [ "$BRANCH" != "$DEFBRANCH" ]; then
+    echo "Branch '$BRANCH' is not default ('$DEFBRANCH'); pushing to $UPSTREAM only"
+    REMOTES=$UPSTREAM
+fi
+
+STATUS=0
+for name in $REMOTES; do
+    echo ""
+    echo "--------Pushing to $name"
+    # Explicit refspec so the branch need not track this remote; stdin is
+    # detached so git cannot consume anything from the caller.
+    git push "$name" "refs/heads/$BRANCH:refs/heads/$BRANCH" "$@" < /dev/null \
+        || { echo "Push to $name failed; continuing"; STATUS=1; }
+done
+echo ""
+exit $STATUS
