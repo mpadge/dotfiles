@@ -1,6 +1,8 @@
 #!/usr/bin/bash
 
-# Usage: git-origin-open-url.bash [<remote> ...]
+# Usage: git-open-url.bash [all | <remote> ...]
+#
+# "all" opens every remote.
 #
 # Open the https URL of one or more remotes in the browser. With no args, opens
 # the upstream remote, as set by `git config gitbin.upstream` (see
@@ -40,7 +42,9 @@ if [ -z "$REMOTES" ]; then
     exit 1
 fi
 
-if [ $# -gt 0 ]; then
+if [ "$1" == "all" ]; then
+    targets=($REMOTES)
+elif [ $# -gt 0 ]; then
     targets=("$@")
 else
     upstream=$(git config gitbin.upstream)
