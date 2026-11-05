@@ -12,7 +12,7 @@ places (in alphabetical order):
 - https://git.sr.ht/~mpadge/dotfiles
 - https://github.com/mpadge/dotfiles
 - https://gitlab.com/mpadge/dotfiles
-- https://tangled.org/mpadge.tngl.sh/dotfiles
+- https://tangled.org/mpadge.ue/dotfiles
 
 ## Uses
 
