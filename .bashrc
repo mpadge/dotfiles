@@ -215,6 +215,16 @@ export PATH="$PATH:$HOME/.gitbin"
 export PATH="$PATH:$HOME/bin/tree-sitter-parser"
 export PATH="$PATH:$HOME/go/bin"
 
+# Remap 'git push' command:
+git() {
+    if [ "$1" = push ]; then
+        shift
+        git-push "$@"
+    else
+        command git "$@"
+    fi
+}
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
