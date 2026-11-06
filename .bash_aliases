@@ -23,7 +23,6 @@ alias f="ranger"
 # netdata server:
 # systemctl stop/start netdata
 alias netdata="firefox http://127.0.0.1:19999/ &"
-alias gitpush="bash <path>/<to>/<my>/<gitpush>/<script>"
 alias incr="Rscript -e 'mpmisc::increment_dev_version()'"
 alias todo="nvim ~/Documents/todo"
 alias sizes="du -sh * | sort -h"
