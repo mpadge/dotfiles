@@ -9,7 +9,8 @@ show_help () {
     echo -e "${TXT}himalaya.bash${NC}\n"
     echo "Usage: email [<account> [<option>] [<arg>]]"
     echo
-    echo "  (no arguments)          List inboxes of all configured accounts"
+    echo "  (no arguments)          List inbox of the default account ('${DEFAULT_ACCOUNT}')"
+    echo "  all                     List inboxes of all configured accounts"
     echo "  help, -h, --help        Show this help"
     echo "  <account>               List inbox of the given account"
     echo "  <account> <id>          Read message <id>, paged through less"
@@ -20,19 +21,20 @@ show_help () {
     echo "<account> is the name of an account configured in himalaya."
     echo "It may be omitted for d, ss, sb, and <id>, in which case the default"
     echo "account ('${DEFAULT_ACCOUNT}') is used, e.g. 'email 123' or 'email ss invoice'."
-    echo "Consequently, accounts must not be named d, ss, sb, or be purely numeric."
+    echo "Consequently, accounts must not be named d, ss, sb, all, or be purely numeric."
 }
 
 # If the first arg is a command (d, ss, sb) or a message id rather than an
 # account name, prepend the default account so the positional logic below works.
 DEFAULT_ACCOUNT="email"
-if [[ "$1" =~ ^(d|ss|sb)$ ]] || [[ "$1" =~ ^[0-9]+$ ]]; then
+# With no args at all, also use the default account.
+if [ "$#" -eq 0 ] || [[ "$1" =~ ^(d|ss|sb)$ ]] || [[ "$1" =~ ^[0-9]+$ ]]; then
     set -- "$DEFAULT_ACCOUNT" "$@"
 fi
 
 if [ "$1" == "help" ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
     show_help
-elif [ "$1" == "" ]; then # no args: check all accounts
+elif [ "$1" == "all" ]; then # no args: check all accounts
     echo -e "${SYM} ${TXT}email1${NC}"
     himalaya -a email1
     echo -e "${SYM} ${TXT}email2${NC}"
