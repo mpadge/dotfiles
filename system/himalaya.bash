@@ -42,13 +42,13 @@ elif [ "$1" == "all" ]; then # no args: check all accounts
     # ... add further accounts here
 elif [ "$2" == "" ]; then # account only: list its messages
     echo -e "${SYM} ${TXT}$1${NC}"
-    himalaya -a $1
+    himalaya -a $1 envelope list
 elif [ "$2" == "d" ]; then # delete message with id $3
-    himalaya -a $1 delete $3
+    himalaya -a "$1" message delete "$3"
 elif [ "$2" == "ss" ]; then # search subject lines for $3
-    himalaya -a $1 search subject $3
+    himalaya -a "$1" envelope search subject "$3"
 elif [ "$2" == "sb" ]; then # search message bodies for $3
-    himalaya -a $1 search body $3
+    himalaya -a "$1" envelope search body "$3"
 else # anything else is a message id: read it in a pager
-    himalaya -a $1 read $2 | less
+    himalaya -a "$1" message read "$2" | less
 fi
