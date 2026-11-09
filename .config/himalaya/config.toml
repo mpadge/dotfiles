@@ -1,0 +1,14 @@
+[accounts.email]
+default = true
+
+email = "mark.padgham@email.com"
+
+imap.server = "imaps://imap.mail.com:993"
+imap.sasl.plain.authcid = "mark.padgham@email.com"
+imap.sasl.plain.passwd.command = ["pass", "show", "Email/email"]
+
+smtp.server = "smtps://smtp.mail.com:465"
+smtp.sasl.plain.authcid = "mark.padgham@email.com"
+smtp.sasl.plain.passwd.command = ["pass", "show", "Email/email"]
+
+mailbox.alias.trash = "Trash"
