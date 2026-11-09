@@ -14,6 +14,7 @@ show_help () {
     echo "  help, -h, --help        Show this help"
     echo "  <account>               List inbox of the given account"
     echo "  <account> <id>          Read message <id>, paged through less"
+    echo "                          (a 1-2 digit <id> reads that row of the inbox listing)"
     echo "  <account> d <id>        Delete message <id>"
     echo "  <account> ss <string>   Search message subjects for <string>"
     echo "  <account> sb <string>   Search message bodies for <string>"
@@ -36,9 +37,9 @@ if [ "$1" == "help" ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
     show_help
 elif [ "$1" == "all" ]; then # no args: check all accounts
     echo -e "${SYM} ${TXT}email1${NC}"
-    himalaya -a email1
+    himalaya -a email1 envelope list
     echo -e "${SYM} ${TXT}email2${NC}"
-    himalaya -a email2
+    himalaya -a email2 envelope list
     # ... add further accounts here
 elif [ "$2" == "" ]; then # account only: list its messages
     echo -e "${SYM} ${TXT}$1${NC}"
@@ -50,5 +51,14 @@ elif [ "$2" == "ss" ]; then # search subject lines for $3
 elif [ "$2" == "sb" ]; then # search message bodies for $3
     himalaya -a "$1" envelope search body "$3"
 else # anything else is a message id: read it in a pager
-    himalaya -a "$1" message read "$2" | less
+    id="$2"
+    if [[ "$id" =~ ^[0-9]{1,2}$ ]]; then
+        # short number: position in the inbox listing (1 = most recent)
+        id=$(himalaya -a "$1" --json envelope list | jq -r ".envelopes[$((id - 1))].id // empty")
+        if [ -z "$id" ]; then
+            echo "No message at position $2 in the inbox listing" >&2
+            exit 1
+        fi
+    fi
+    himalaya -a "$1" message read "$id" | less
 fi
