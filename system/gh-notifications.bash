@@ -23,6 +23,16 @@ elif [ "$1" == "codeberg" ]; then
     else
         Rscript -e "mpmisc::open_gh_notification ('codeberg', $2)"
     fi
+elif [ "$1" == "codefloe" ]; then
+    if [ "$2" == "" ]; then
+        Rscript -e "mpmisc::gh_notifications ('codefloe')"
+    else
+        Rscript -e "mpmisc::open_gh_notification ('codefloe', $2)"
+    fi
+elif [ "$1" == "all" ]; then
+    Rscript -e "mpmisc::gh_notifications ('github')"
+    Rscript -e "mpmisc::gh_notifications ('codeberg')"
+    Rscript -e "mpmisc::gh_notifications ('codefloe')"
 elif [ "$1" == "help" ]; then
     echo -e "${SYM} ${ARG}help${NC}         : ${TXT}Display these help messages.${NC}"
     echo -e "${SYM} ${ARG}no arguments${NC} : ${TXT}Display new GitHub notifications.${NC}"
