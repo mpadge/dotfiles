@@ -1,6 +1,7 @@
 export EDITOR='nvim'
 export NVIM_COLOUR_SCHEME="none"
-export CLAUDE_CONFIG_DIR='/<some>/<where>/claude'
+export BASE_PATH='/<some>/<where>'
+export CLAUDE_CONFIG_DIR="$BASE_PATH/claude"
 export GH_TELEMETRY=false
 export DO_NOT_TRACK=true
 
@@ -343,12 +344,12 @@ if [ "$git_repository" ]; then
     echo -e ""
 fi
 
-bash /<some>/<where>/system/scripts/r-version.bash
+bash $BASE_PATH/system/scripts/r-version.bash
 
 export PATH="$PATH:$HOME/miniconda/bin"
 
 # Added by Radicle.
-export PATH="$PATH:/home/<me>/.radicle/bin"
+export PATH="$PATH:$HOME/.radicle/bin"
 
 # ---------- ONEFETCH START ----------
 #
@@ -379,4 +380,4 @@ check_directory_for_new_repository
 #
 
 # opencode
-export PATH=/home/<me>/.opencode/bin:$PATH
+export PATH=$HOME/.opencode/bin:$PATH
