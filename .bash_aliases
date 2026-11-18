@@ -1,7 +1,7 @@
 alias wtf="source ~/.bashrc"
 alias home="cd ~"
 alias xf=startxfce4
-alias code="cd $BASE_PATH/code/repos"
+alias code="cd $CODE_PATH"
 #alias a="if [ -z \"${TMUX_PANE}\" ]; then tmux; else echo 'nope'; fi; vim aaa.Rmd"
 alias a="nvim aaa.Rmd"
 alias l="tree -L 1"

@@ -16,6 +16,7 @@
 # ------------------------------------
 
 export BASE_PATH='/<some>/<where>'
+export CODE_PATH="$BASE_PATH/<some>/<where>"
 export CLAUDE_CONFIG_DIR="$BASE_PATH/claude"
 export EDITOR='nvim'
 export NVIM_COLOUR_SCHEME="none"
