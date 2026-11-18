@@ -42,7 +42,7 @@ updatePacman() {
 }
 
 updateCargo() {
-    sudo rustup update
+    rustup update
 }
 
 updateNode() {
