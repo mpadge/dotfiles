@@ -22,6 +22,8 @@ export NVIM_COLOUR_SCHEME="none"
 export GH_TELEMETRY=false
 export DO_NOT_TRACK=true
 
+export ATPROTO_IDENTIFIER='mpadge.eu'
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
