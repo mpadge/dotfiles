@@ -17,6 +17,8 @@
 
 export BASE_PATH='/<some>/<where>'
 export CODE_PATH="$BASE_PATH/<some>/<where>"
+export BASE_PATH='/data/mega'
+export CODE_PATH="$BASE_PATH/code/repos"
 export CLAUDE_CONFIG_DIR="$BASE_PATH/claude"
 export EDITOR='nvim'
 export NVIM_COLOUR_SCHEME="none"
@@ -212,8 +214,17 @@ eval "$(starship init bash)"
 #     8. Startup banner and git repository greeter
 # ------------------------------------
 
-# All variables are local, so none leak into the interactive shell.
-# https://texteditor.com/multiline-text-art/
+# Render a partially filled bar for a percentage string such as "45%"
+usage_bar() {
+    local pct=${1%\%} width=20 filled i bar=''
+    pct=${pct:-0}
+    filled=$(( pct * width / 100 ))
+    for (( i = 0; i < width; i++ )); do
+        if (( i < filled )); then bar+='█'; else bar+='░'; fi
+    done
+    printf '%s' "$bar"
+}
+
 startup_banner() {
     local BLUE='\e[0;34m'
     local GREEN='\e[0;32m'
@@ -251,6 +262,7 @@ startup_banner() {
 
     HLINE=$(printf '%40s\n' | tr ' ' -)
 
+    # https://texteditor.com/multiline-text-art/
     echo -e ""
     echo -e "$GREEN ████████╗██╗  ██╗███████╗    ██████╗  ██████╗ ██╗  ██╗ "
     echo -e "$GREEN ╚══██╔══╝██║  ██║██╔════╝    ██╔══██╗██╔═══██╗╚██╗██╔╝ "
@@ -259,18 +271,50 @@ startup_banner() {
     echo -e "$GREEN    ██║   ██║  ██║███████╗    ██████╔╝╚██████╔╝██╔╝ ██╗ "
     echo -e "$GREEN    ╚═╝   ╚═╝  ╚═╝╚══════╝    ╚═════╝  ╚═════╝ ╚═╝  ╚═╝ "
     echo -e ""
-    echo -e "$BLUE                A                 $LIGHTBLUE\e[1m         OS: $NC $OS"
-    echo -e "$BLUE               ooo                $LIGHTBLUE\e[1m       Host: $NC $HOST"
-    echo -e "$BLUE              ooooo               $LIGHTBLUE\e[1m     Kernel: $NC $KERNEL"
-    echo -e "$BLUE             ooooooo              $LIGHTBLUE\e[1m        Cpu: $NC $CPU"
-    echo -e "$BLUE            ooooooooo             $LIGHTBLUE\e[1m      Ncpus: $NC $NCPUS"
-    echo -e "$BLUE           ooooo ooooo            $LIGHTGREEN$HLINE$NC"
-    echo -e "$BLUE          ooooo   ooooo           $LIGHTBLUE\e[1m     Memory: $NC $MEMUSED / $MEMTOT GB (${MEMPC}%)"
-    echo -e "$BLUE         ooooo     ooooo          $LIGHTBLUE\e[1m    Disk(/): $NC $DSROOTUSED / $DSROOTSIZE GB (${DSROOTPC})"
-    echo -e "$BLUE        ooooo       ooooo         $LIGHTBLUE\e[1mDisk(/data): $NC $DSDATAUSED / $DSDATASIZE GB (${DSDATAPC})"
-    echo -e "$BLUE       ooooo  $WHITE<oooooooooo>        $LIGHTGREEN$HLINE$NC"
-    echo -e "$BLUE      ooooo      $WHITE<oooooooo>       $LIGHTBLUE\e[1m   Packages: $NC $NPKGS"
-    echo -e "$BLUE     ooooo          $WHITE<oooooo>      $LIGHTBLUE\e[1m R Packages: $NC $NRPKGS ($DSRPKGS)"
+
+    # Two horizontal panels: left = logo, right = system info. Row i of each
+    # panel is printed on the same line.
+    local -a LEFT=(
+        ""
+        "                A"
+        "               ooo"
+        "              ooooo"
+        "             ooooooo"
+        "            ooooooooo"
+        "           ooooo ooooo"
+        "          ooooo   ooooo"
+        "         ooooo     ooooo"
+        "        ooooo       ooooo"
+        "       ooooo  $WHITE<oooooooooo>"
+        "      ooooo      $WHITE<oooooooo>"
+        "     ooooo          $WHITE<oooooo>"
+        ""
+    )
+    local -a RIGHT=(
+        "$LIGHTBLUE\e[1m         OS: $NC $OS"
+        "$LIGHTBLUE\e[1m       Host: $NC $HOST"
+        "$LIGHTBLUE\e[1m     Kernel: $NC $KERNEL"
+        "$LIGHTBLUE\e[1m        Cpu: $NC $CPU"
+        "$LIGHTBLUE\e[1m      Ncpus: $NC $NCPUS"
+        "$LIGHTGREEN$HLINE$NC"
+        "$LIGHTBLUE\e[1m     Memory: $NC $MEMUSED / $MEMTOT GB (${MEMPC}%)"
+        "$LIGHTBLUE\e[1m    Disk(/): $NC $DSROOTUSED / $DSROOTSIZE GB (${DSROOTPC})"
+        "$LIGHTBLUE             $NC $GREEN$(usage_bar "$DSROOTPC")$NC"
+        "$LIGHTBLUE\e[1mDisk(/data): $NC $DSDATAUSED / $DSDATASIZE GB (${DSDATAPC})"
+        "$LIGHTBLUE             $NC $GREEN$(usage_bar "$DSDATAPC")$NC"
+        "$LIGHTGREEN$HLINE$NC"
+        "$LIGHTBLUE\e[1m   Packages: $NC $NPKGS"
+        "$LIGHTBLUE\e[1m R Packages: $NC $NRPKGS ($DSRPKGS)"
+    )
+    local row
+    for row in "${!RIGHT[@]}"; do
+        # Pad by visible width: strip colour codes before measuring
+        local left="${LEFT[row]}" plain="${LEFT[row]}"
+        while [[ $plain =~ \\e\[[0-9\;]*m ]]; do
+            plain=${plain/"${BASH_REMATCH[0]}"/}
+        done
+        printf '%b%b%b%*s %b\n' "$BLUE" "$left" "$NC" $(( 28 - ${#plain} )) '' "${RIGHT[row]}"
+    done
 
     # Conditionally run separator only if in git repo, where one fetch will be
     # run below:
